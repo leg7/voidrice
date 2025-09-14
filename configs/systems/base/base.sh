@@ -36,8 +36,10 @@ sudo xbps-install -y \
 	p7zip wget curl \
 	git \
 	zsh starship \
-	rsync \
-	keyd
+	rsync
+
+sudo xbps-install -y keyd
+sudo ln -sf /etc/sv/keyd/ /var/service
 
 # TODO: Setup keyd
 # TODO: Setup zsh
@@ -47,7 +49,8 @@ sudo xbps-install -y \
 
 # Schedule fstrim
 
-rsync -a ./files/ ~
+rsync -a ./files/home/ ~
+sudo rsync -a ./files/root/ /
 
 
 
