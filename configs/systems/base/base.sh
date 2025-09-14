@@ -36,6 +36,7 @@ xbps-install -y \
 	p7zip wget curl \
 	git \
 	zsh starship \
+	rsync \
 	keyd
 
 # TODO: Setup keyd
@@ -46,7 +47,7 @@ xbps-install -y \
 
 # Schedule fstrim
 
-cp -r ./files/* ~
+rsync -a ./files/ ~
 
 
 

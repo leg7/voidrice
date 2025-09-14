@@ -43,4 +43,4 @@ xbps-install -y \
 	ImageMagick ffmpeg yt-dlp \
 	jq
 
-cp -r ./files/* ~
+rsync -a ./files/ ~
