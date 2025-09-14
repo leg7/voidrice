@@ -2,6 +2,8 @@
 
 # Graphical wayland stuff
 
+xbps-install -Sy
+
 xbps-install -y seatd
 ln -sf /etc/sv/seatd /var/service
 
@@ -41,9 +43,4 @@ xbps-install -y \
 	ImageMagick ffmpeg yt-dlp \
 	jq
 
-
-
-
-
-
-
+cp -r ./files/* ~

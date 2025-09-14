@@ -1,5 +1,7 @@
 #!/bin/sh
 
+xbps-install -Sy
+
 xbps-install -y font-spleen
 echo 'FONT="spleen-12x24"' >> /etc/rc.conf
 setfont spleen-12x24
@@ -44,6 +46,7 @@ xbps-install -y \
 
 # Schedule fstrim
 
+cp -r ./files/* ~
 
 
 
