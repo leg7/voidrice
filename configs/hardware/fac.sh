@@ -3,16 +3,15 @@
 # ../systems/base/base.sh
 # ../systems/wm/wm.sh
 
-xbps-install -y void-repo-nonfree intel-ucode
+sudo xbps-install -y void-repo-nonfree intel-ucode
 
-xbps-install -y brightnessctl kanshi
+sudo xbps-install -y brightnessctl kanshi
 
-xbps-install -y mesa-dri vulkan-loader mesa-vulkan-intel intel-media-driver
+sudo xbps-install -y mesa-dri vulkan-loader mesa-vulkan-intel intel-media-driver
 
-xbps-install -y iwd dbus
-ln -sf /etc/sv/dbus /var/service
-ln -sf /etc/sv/iwd /var/service
-unlink /var/service/wpa_supplicant
-xbps-remove -y wpa_supplicant
+sudo xbps-install -y iwd dbus
+sudo ln -sf /etc/sv/dbus /var/service
+sudo ln -sf /etc/sv/iwd /var/service
+sudo unlink /var/service/wpa_supplicant
 
 # TODO: install tlp

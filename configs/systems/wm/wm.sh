@@ -1,19 +1,23 @@
 #!/bin/sh
 
+
+sudo xbps-install -Sy
+
+sudo xbps-install -y void-repo-nonfree
+
 # Graphical wayland stuff
 
-xbps-install -Sy
+sudo xbps-install -y seatd
+sudo ln -sf /etc/sv/seatd /var/service
+sudo usermod -aG _seatd user
+XDG_RUNTIME_DIR="/run/user/$(id -u)"
+sudo mkdir -p "$XDG_RUNTIME_DIR"
+sudo chmod 700 "$XDG_RUNTIME_DIR"
+sudo chown -R user:user "$XDG_RUNTIME_DIR"
 
-xbps-install -y void-repo-nonfree
+sudo xbps-install -y qt6-wayland qt5-wayland kwayland
 
-xbps-install -y seatd
-ln -sf /etc/sv/seatd /var/service
-usermod -aG _seatd user
-
-xbps-install -y qt6-wayland qt5-wayland kwayland
-# TODO: SET QT_QPA_PLATFORM=wayland ELM_DISPLAY=wl SDL_VIDEODRIVER=wayland MOZ_ENABLE_WAYLAND=1 XDG_SESSION_TYPE=wayland
-
-xbps-install -y \
+sudo xbps-install -y \
 	river xorg-server-xwayland xdg-desktop-portal-gtk yambar fuzzel swayidle swaylock wlogout fnott \
 	foot firefox imv mpv zathura nemo qalculate-gtk qdirstat gpick syncthing obs Signal-Desktop halloy android-file-transfer-linux \
 	newsboat \
@@ -26,7 +30,7 @@ xbps-install -y \
 # autologin
 
 # Gaming
-xbps-install -y \
+sudo xbps-install -y \
 	steam \
 	PrismLauncher \
 	MangoHud
@@ -34,7 +38,7 @@ xbps-install -y \
 # Heroic, cemu, osu lazer, wootility
 
 # Dev tools
-xbps-install -y \
+sudo xbps-install -y \
 	pandoc \
 	clang \
 	python \

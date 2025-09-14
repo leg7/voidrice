@@ -7,8 +7,6 @@ export FZF_DEFAULT_OPTS="--ansi --layout reverse --color fg:-1,fg+:-1,bg:-1,bg+:
 
 # Make programs use xdg dirs by default
 XDG_RUNTIME_DIR="/run/user/$(id -u)"
-mkdir -p "$XDG_RUNTIME_DIR"
-chmod 700 "$XDG_RUNTIME_DIR"
 export XDG_RUNTIME_DIR
 
 export XDG_CACHE_HOME="$HOME/.local/cache"
@@ -34,6 +32,12 @@ export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java"
 # DE env
 export _JAVA_AWT_WM_NONREPARENTING=1
 export BROWSER="firefox"
+
+export QT_QPA_PLATFORM=wayland
+export ELM_DISPLAY=wl
+export SDL_VIDEODRIVER=wayland
+export MOZ_ENABLE_WAYLAND=1
+export XDG_SESSION_TYPE=wayland
 
 stty -ixon
 

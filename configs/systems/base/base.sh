@@ -1,33 +1,33 @@
 #!/bin/sh
 
-xbps-install -Sy
+sudo xbps-install -Sy
 
-xbps-install -y font-spleen
-echo 'FONT="spleen-12x24"' >> /etc/rc.conf
+sudo xbps-install -y font-spleen
+echo 'FONT="spleen-12x24"' | sudo tee -a /etc/rc.conf
 setfont spleen-12x24
 
 # Logging
 
-xbps-install -y socklog
-ln -sf /etc/sv/socklog-unix/ /var/service
-ln -sf /etc/sv/nanoklogd/ /var/service
+sudo xbps-install -y socklog
+sudo ln -sf /etc/sv/socklog-unix/ /var/service
+sudo ln -sf /etc/sv/nanoklogd/ /var/service
 
 # Date and time
 
-ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+sudo ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 
-xbps-install -y openntpd
-ln -sf /etc/sv/openntpd/ /var/service
+sudo xbps-install -y openntpd
+sudo ln -sf /etc/sv/openntpd/ /var/service
 
 # Network
 
-xbps-install -y dhcpcd
-ln -sf /etc/sv/dhcpcd /var/service
+sudo xbps-install -y dhcpcd
+sudo ln -sf /etc/sv/dhcpcd /var/service
 
 # TODO: Configure nftables firewall
 
 # Must have
-xbps-install -y \
+sudo xbps-install -y \
 	clang shellcheck \
 	neovim \
 	task \
