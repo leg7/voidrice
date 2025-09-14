@@ -6,6 +6,11 @@ export ASAN_OPTIONS="halt_on_error=0"
 export FZF_DEFAULT_OPTS="--ansi --layout reverse --color fg:-1,fg+:-1,bg:-1,bg+:-1,hl:-1,hl+:-1,query:-1,gutter:-1"
 
 # Make programs use xdg dirs by default
+XDG_RUNTIME_DIR="/run/user/$(id -u)"
+mkdir -p "$XDG_RUNTIME_DIR"
+chmod 700 "$XDG_RUNTIME_DIR"
+export XDG_RUNTIME_DIR
+
 export XDG_CACHE_HOME="$HOME/.local/cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
