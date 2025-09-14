@@ -3,7 +3,9 @@
 # ../systems/base/base.sh
 # ../systems/wm/wm.sh
 
-xbps-install -y intel-ucode brightnessctl kanshi
+xbps-install -y void-repo-nonfree intel-ucode
+
+xbps-install -y brightnessctl kanshi
 
 xbps-install -y mesa-dri vulkan-loader mesa-vulkan-intel intel-media-driver
 

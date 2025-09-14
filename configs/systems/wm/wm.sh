@@ -4,8 +4,11 @@
 
 xbps-install -Sy
 
+xbps-install -y void-repo-nonfree
+
 xbps-install -y seatd
 ln -sf /etc/sv/seatd /var/service
+usermod -aG _seatd user
 
 xbps-install -y qt6-wayland qt5-wayland kwayland
 # TODO: SET QT_QPA_PLATFORM=wayland ELM_DISPLAY=wl SDL_VIDEODRIVER=wayland MOZ_ENABLE_WAYLAND=1 XDG_SESSION_TYPE=wayland
