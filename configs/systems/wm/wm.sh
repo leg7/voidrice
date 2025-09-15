@@ -26,6 +26,14 @@ sudo xbps-install -y \
 	adwaita-icon-theme adwaita-qt \
 	noto-fonts-cjk noto-fonts-emoji noto-fonts-ttf nerd-fonts-symbols-ttf
 
+sudo xbps-install -y wayland wayland-devel wayland-protocols wlroots libxkbcommon libevdev pixman pkg-config zig
+git clone https://git.sr.ht/~novakane/rivercarro rivercarro
+cd rivercarro
+git checkout v0.5.0
+zig build -Doptimize=ReleaseSafe --prefix ~/.local
+cd -
+rm -rf rivercarro
+
 # Transmission torrents, vial, logseq, rivercarro, door-knocker, banana cursor, mime apps, portals, xdg-dirs, pipewire
 # autologin
 
