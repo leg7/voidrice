@@ -26,6 +26,8 @@ sudo xbps-install -y \
 	adwaita-icon-theme adwaita-qt \
 	noto-fonts-cjk noto-fonts-emoji noto-fonts-ttf nerd-fonts-symbols-ttf
 
+# Install rivercarro (not in void repos)
+
 sudo xbps-install -y wayland wayland-devel wayland-protocols wlroots libxkbcommon libevdev pixman pkg-config zig
 git clone https://git.sr.ht/~novakane/rivercarro rivercarro
 cd rivercarro
