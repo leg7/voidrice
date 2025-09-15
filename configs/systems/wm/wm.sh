@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 sudo xbps-install -Sy
 
 sudo xbps-install -y void-repo-nonfree
@@ -10,10 +9,6 @@ sudo xbps-install -y void-repo-nonfree
 sudo xbps-install -y seatd
 sudo ln -sf /etc/sv/seatd /var/service
 sudo usermod -aG _seatd user
-XDG_RUNTIME_DIR="/run/user/$(id -u)"
-sudo mkdir -p "$XDG_RUNTIME_DIR"
-sudo chmod 700 "$XDG_RUNTIME_DIR"
-sudo chown -R user:user "$XDG_RUNTIME_DIR"
 
 sudo xbps-install -y qt6-wayland qt5-wayland kwayland
 
@@ -60,4 +55,5 @@ sudo xbps-install -y \
 	ImageMagick ffmpeg yt-dlp \
 	jq
 
-rsync -a ./files/ ~
+rsync -a ./files/root/ /
+rsync -a ./files/home/ ~

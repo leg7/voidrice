@@ -41,7 +41,6 @@ sudo xbps-install -y \
 sudo xbps-install -y keyd
 sudo ln -sf /etc/sv/keyd/ /var/service
 
-# TODO: Setup keyd
 # TODO: Setup zsh
 # TODO: Setup starship
 
