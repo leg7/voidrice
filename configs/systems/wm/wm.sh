@@ -31,12 +31,18 @@ zig build -Doptimize=ReleaseSafe --prefix ~/.local
 cd -
 
 # Pipewire
+
 sudo xbps-install -y pipewire
 mkdir -p /etc/pipewire/pipewire.conf.d
 ln -sf /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire.conf.d/
 ln -sf /usr/share/examples/pipewire/20-pipewire-pulse.conf /etc/pipewire/pipewire.conf.d/
 
-# Transmission torrents, vial, logseq, rivercarro, door-knocker, banana cursor, mime apps, portals, xdg-dirs, pipewire
+# Bluetooth
+
+sudo xbps-install -y bluez libspa-bluetooth
+sudo ln -sf /etc/sv/bluetoothd /var/service
+
+# Transmission torrents, vial, logseq, door-knocker, banana cursor, mime apps, portals, xdg-dirs
 # autologin
 
 # Gaming
@@ -62,3 +68,5 @@ sudo xbps-install -y \
 
 rsync -a ./files/root/ /
 rsync -a ./files/home/ ~
+
+xbps-reconfigure -f fontconfig
