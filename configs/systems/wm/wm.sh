@@ -24,12 +24,11 @@ sudo xbps-install -y \
 # Install rivercarro (not in void repos)
 
 sudo xbps-install -y wayland wayland-devel wayland-protocols wlroots libxkbcommon libevdev pixman pkg-config zig
-git clone https://git.sr.ht/~novakane/rivercarro rivercarro
-cd rivercarro
+git clone https://git.sr.ht/~novakane/rivercarro ~/.local/share/rivercarro
+cd ~/.local/share/rivercarro
 git checkout v0.5.0
 zig build -Doptimize=ReleaseSafe --prefix ~/.local
 cd -
-rm -rf rivercarro
 
 # Pipewire
 sudo xbps-install -y pipewire
