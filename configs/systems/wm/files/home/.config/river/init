@@ -27,6 +27,7 @@ dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT
 /home/user/.config/river/maps &
 wait
 
+pipewire &
 setbg -i &
 foot --server &
 fnott &
