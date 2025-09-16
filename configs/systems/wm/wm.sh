@@ -31,6 +31,11 @@ zig build -Doptimize=ReleaseSafe --prefix ~/.local
 cd -
 rm -rf rivercarro
 
+# Pipewire
+sudo xbps-install -y pipewire
+mkdir -p /etc/pipewire/pipewire.conf.d
+ln -sf /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire.conf.d/
+
 # Transmission torrents, vial, logseq, rivercarro, door-knocker, banana cursor, mime apps, portals, xdg-dirs, pipewire
 # autologin
 
