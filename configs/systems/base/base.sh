@@ -6,6 +6,9 @@ sudo xbps-install -y font-spleen
 echo 'FONT="spleen-12x24"' | sudo tee -a /etc/rc.conf
 setfont spleen-12x24
 
+sudo xbps-install -y acpi
+sudo ln -sf /etc/sv/acpid/ /var/service
+
 # Logging
 
 sudo xbps-install -y socklog
@@ -50,10 +53,3 @@ sudo ln -sf /etc/sv/keyd/ /var/service
 
 rsync -a ./files/home/ ~
 sudo rsync -a ./files/root/ /
-
-
-
-
-
-
-

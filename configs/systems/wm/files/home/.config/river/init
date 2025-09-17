@@ -33,8 +33,5 @@ foot --server &
 fnott &
 wlsunset -S 6:00 -s 21:00 -t 4000 -d 900 &
 easyeffects --gapplication-service &
-logseq &
 yambar-reload &
 kanshi &
-qbittorrent &
-nix-shell -p logseq --run 'setsid logseq > /dev/null 2> /dev/null &' &

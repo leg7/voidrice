@@ -2,5 +2,5 @@
 pid="$(pidof yambar)"
 kill "$pid"
 
-yambar -d none -c "$XDG_CONFIG_HOME"/yambar/config-"$(hostname)".yml &
+yambar -d none -c "$XDG_CONFIG_HOME"/yambar/config-"$(hostname)".yml
 

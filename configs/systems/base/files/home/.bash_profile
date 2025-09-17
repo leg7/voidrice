@@ -1,6 +1,7 @@
 
 export PAGER="less"
 export LESS="R" # Less default options (inhibits git from calling less with -F and -R)
+export BROWSER="firefox"
 export EDITOR="nvim"
 
 export ASAN_OPTIONS="halt_on_error=0"
@@ -31,13 +32,3 @@ export ANDROID_USER_HOME="${XDG_DATA_HOME}/android"
 export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
 export LEIN_HOME="${XDG_DATA_HOME}/lein"
 export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java"
-
-# DE env
-export _JAVA_AWT_WM_NONREPARENTING=1
-export BROWSER="firefox"
-
-export QT_QPA_PLATFORM=wayland
-export ELM_DISPLAY=wl
-export SDL_VIDEODRIVER=wayland
-export MOZ_ENABLE_WAYLAND=1
-export XDG_SESSION_TYPE=wayland

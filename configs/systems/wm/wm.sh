@@ -13,7 +13,7 @@ sudo usermod -aG _seatd user
 sudo xbps-install -y qt6-wayland qt5-wayland kwayland
 
 sudo xbps-install -y \
-	river xorg-server-xwayland xdg-desktop-portal-gtk yambar fuzzel swayidle swaylock wlogout fnott \
+	river xorg-server-xwayland xdg-desktop-portal-gtk yambar fuzzel swayidle swaylock wlogout fnott wlsunset kanshi \
 	foot firefox imv mpv zathura nemo qalculate-gtk qdirstat gpick syncthing obs Signal-Desktop halloy android-file-transfer-linux \
 	newsboat \
 	wl-clipboard xlsclients lswt wlr-randr qrencode swaybg grim slurp satty libnotify \
