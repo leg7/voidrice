@@ -66,7 +66,8 @@ sudo xbps-install -y \
 	ImageMagick ffmpeg yt-dlp \
 	jq
 
-rsync -a ./files/root/ /
-rsync -a ./files/home/ ~
-
 xbps-reconfigure -f fontconfig
+
+cd ./files
+stow -R --no-folding -t ~ home
+sudo stow -R --no-folding -t / root

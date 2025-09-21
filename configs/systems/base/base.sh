@@ -39,6 +39,7 @@ sudo xbps-install -y \
 	p7zip wget curl \
 	git \
 	zsh starship \
+	stow \
 	rsync
 
 sudo xbps-install -y keyd
@@ -51,5 +52,6 @@ sudo ln -sf /etc/sv/keyd/ /var/service
 
 # Schedule fstrim
 
-rsync -a ./files/home/ ~
-sudo rsync -a ./files/root/ /
+cd ./files
+stow -R --no-folding -t ~ home
+sudo stow -R --no-folding -t / root
