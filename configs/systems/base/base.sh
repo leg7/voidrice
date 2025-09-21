@@ -38,15 +38,15 @@ sudo xbps-install -y \
 	bottom \
 	p7zip wget curl \
 	git \
-	zsh starship \
+	fish-shell starship \
 	stow \
 	rsync
 
+chsh -s /usr/bin/fish
+sudo chsh -s /usr/bin/fish
+
 sudo xbps-install -y keyd
 sudo ln -sf /etc/sv/keyd/ /var/service
-
-# TODO: Setup zsh
-# TODO: Setup starship
 
 # change default dracut reconfigure thing
 
