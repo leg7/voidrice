@@ -1,8 +1,10 @@
 -- TODO:
--- Add local completion fallback when lsp not available
 -- configure lua snippets
 -- Fix 'gl' conflict between vim-lion and lsp
 -- make better treesitter text objects to improve navigation
+-- Fix ctrl T bind conflict with terminal bind
+-- change ctl ] [ binds
+-- figure out quickfix
 
 vim.g.mapleader = ','
 
@@ -18,6 +20,30 @@ if not vim.loop.fs_stat(lazypath) then
 	})
 end
 vim.opt.rtp:prepend(lazypath)
+
+local symbols = {
+	error = '😱',
+	warn  = '😟',
+	hint  = '😉',
+	info  = '🤓',
+}
+
+-- Make sure these servers are installed on your system
+local lsp_servers = {
+	'zls',
+	'hls',
+	'asm_lsp',
+	'bashls',
+	'ocamllsp',
+	'clangd',
+	'nixd',
+	'emmet_ls',
+	'ts_ls',
+	'rust_analyzer',
+	'jdtls',
+	'pylsp',
+	'lua_ls',
+}
 
 require('lazy').setup({
 	{
@@ -109,7 +135,7 @@ require('lazy').setup({
 			ins_left {
 				'diagnostics',
 				sources = { 'nvim_diagnostic' },
-				symbols = { error = ' ', warn = ' ', info = ' ' },
+				symbols = { error = symbols.error, warn = symbols.warn, info = symbols.info },
 			}
 
 			ins_right {
@@ -118,7 +144,6 @@ require('lazy').setup({
 			}
 			ins_right {
 				'diff',
-				-- Is it me or the symbol for modified us really weird
 				symbols = { added = ' ', modified = ' ', removed = ' ' },
 				cond = conditions.hide_in_width,
 			}
@@ -126,62 +151,16 @@ require('lazy').setup({
 			lualine.setup(config)
 		end,
 	},
+	{ 'neovim/nvim-lspconfig', lazy = false },
 	{
-		'neovim/nvim-lspconfig',
-		dependencies = 'hrsh7th/cmp-nvim-lsp',
+		'hrsh7th/cmp-nvim-lsp',
+		lazy = false,
 		config = function()
-
-			local lspconfig_defaults = require('lspconfig').util.default_config
-			lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-				'force',
-				lspconfig_defaults.capabilities,
-				require('cmp_nvim_lsp').default_capabilities()
-			)
-
-			local lspconfig = require('lspconfig')
-			lspconfig.zls.setup({})
-			lspconfig.hls.setup({
-				-- TODO: figure out how to disable certain hints
-			})
-			lspconfig.asm_lsp.setup({})
-			lspconfig.bashls.setup({})
-			lspconfig.ocamllsp.setup({})
-			lspconfig.clangd.setup({})
-			lspconfig.nixd.setup({})
-			lspconfig.lua_ls.setup({})
-			lspconfig.emmet_ls.setup({})
-			lspconfig.ts_ls.setup({})
-			lspconfig.rust_analyzer.setup({})
-			lspconfig.jdtls.setup({})
-			lspconfig.pylsp.setup({})
-		end,
-		ft = {
-			'zig',
-			'haskell',
-			'asm',
-			'sh',
-			'ocaml',
-			'c', 'cpp',
-			'nix',
-			'lua',
-			'html', 'javascript', 'php',
-			'rust',
-			'java',
-			'python',
-		},
-		keys = {
-			{ 'gd',      mode = 'n',        '<cmd>lua vim.lsp.buf.definition()<cr>',           desc = 'lsp: Go to definition of symbol' },
-			{ 'gD',      mode = 'n',        '<cmd>lua vim.lsp.buf.declaration()<cr>',          desc = 'lsp: Go to declaration of symbol' },
-			{ 'gi',      mode = 'n',        '<cmd>lua vim.lsp.buf.implementation()<cr>',       desc = 'lsp: Go to implementation of symbol' },
-			{ 'go',      mode = 'n',        '<cmd>lua vim.lsp.buf.type_definition()<cr>',      desc = 'lsp: Go to type definition of symbol' },
-			-- { 'gr',   mode = 'n',        '<cmd>lua vim.lsp.buf.references()<cr>',           desc = 'lsp: Find references of symbol' },
-			{ 'gs',      mode = 'n',        '<cmd>lua vim.lsp.buf.signature_help()<cr>',       desc = 'lsp: Show signature help for function' },
-			{ '<c-s>',   mode = 'i',        '<cmd>lua vim.lsp.buf.signature_help()<cr>',       desc = 'lsp: Show signature help for function' },
-			{ 'gh',      mode = 'n',        '<cmd>lua vim.lsp.buf.hover()<cr>',       		   desc = 'lsp: Show information about symbol under the cursor' },
-			{ 'gr',      mode = 'n',        '<cmd>lua vim.lsp.buf.rename()<cr>',               desc = 'lsp: Rename symbol under cursor' },
-			{ 'gF',      mode = {'n', 'x'}, '<cmd>lua vim.lsp.buf.format({async = true})<cr>', desc = 'lsp: Format buffer (async)' },
-			{ 'ga',      mode = 'n',        '<cmd>lua vim.lsp.buf.code_action()<cr>',          desc = 'lsp: Show code actions for symbol' },
-		},
+			local c = require('cmp_nvim_lsp').default_capabilities()
+			for i=1,#lsp_servers do
+				vim.lsp.config(lsp_servers[i], { capabilities = c })
+			end
+		end
 	},
 	{
 		'hrsh7th/nvim-cmp',
@@ -192,6 +171,8 @@ require('lazy').setup({
 			cmp.setup({
 				sources = {
 					{name = 'nvim_lsp'},
+					{name = 'luasnip'},
+					{ name = 'buffer' },
 				},
 				snippet = {
 					expand = function(args)
@@ -199,31 +180,24 @@ require('lazy').setup({
 					end,
 				},
 				mapping = require('cmp').mapping.preset.insert({}),
+				window = {
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
+				},
 
+				matching = {
+					disallow_fuzzy_matching = false,
+					disallow_fullfuzzy_matching = false,
+					disallow_partial_fuzzy_matching = false,
+					disallow_partial_matching = false,
+					disallow_prefix_unmatching = false,
+				},
 			})
 		end,
 	},
 	{
 		'L3MON4D3/LuaSnip',
 		event = 'InsertEnter',
-	},
-	{
-		-- Configuring signs through nvim doesn't work so I have to use this
-		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v4.x',
-		lazy = false,
-		config = function()
-			local lsp_zero = require('lsp-zero')
-			lsp_zero.ui({
-				float_border = 'rounded',
-				sign_text = {
-					error = '✘',
-					warn = '▲',
-					hint = '⚑',
-					info = '»',
-				},
-			})
-		end,
 	},
 	{
 		'nvim-treesitter/nvim-treesitter',
@@ -269,10 +243,6 @@ require('lazy').setup({
 		ft = 'nix',
 	},
 	{
-		url = "https://gitlab.redox-os.org/redox-os/ion-vim",
-		ft = 'ion',
-	},
-	{
 		'NvChad/nvim-colorizer.lua',
 		opts = {},
 		ft = { 'vim', 'lua', 'html', 'css', 'js', 'php', 'scss', 'dosini' },
@@ -308,7 +278,7 @@ require('lazy').setup({
 		init = function()
 			vim.g.matchup_surround_enabled = 1
 			vim.g.matchup_transmute_enabled = 1
-			vim.g.matchup_delim_stopline = 43
+			vim.g.matchup_delim_stopline = 3000
 		end,
 		config = function()
 			require('nvim-treesitter.configs').setup {
@@ -400,9 +370,9 @@ require('lazy').setup({
 			-- log_level = 'debug',
 		},
 		keys = {
-			{ '<leader>sf', mode = 'n', '<cmd>Autosession search<cr>', desc = "Find a session to open" },
-			{ '<leader>sd', mode = 'n', '<cmd>Autosession delete<cr>', desc = "Find a session to delete" },
-			{ '<leader>ss', mode = 'n', '<cmd>SessionSave<cr>', desc = "Save current session" },
+			{ '<leader>sf', mode = 'n', '<cmd>AutoSession search<cr>', desc = "Find a session to open" },
+			{ '<leader>sd', mode = 'n', '<cmd>AutoSession delete<cr>', desc = "Find a session to delete" },
+			{ '<leader>ss', mode = 'n', '<cmd>AutoSession save<cr>',   desc = "Save current session" },
 		},
 	},
 	{
@@ -527,23 +497,27 @@ require('lazy').setup({
 			{ '<leader>rx', mode = 'n', '<cmd>REPLClose<cr>', desc = 'REPL close' },
 		},
 	},
-	{ 'rktjmp/lush.nvim', lazy = false, },
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000, lazy = false },
-	{ 'NLKNguyen/papercolor-theme', lazy = false },
-	{ "jameswalls/naysayer.nvim", priority = 1000, lazy = false },
-	{ 'lifepillar/vim-colortemplate', lazy = false },
+	{ 'jameswalls/naysayer.nvim', priority = 1000, lazy = false },
 	{
-		dir = '~/.config/nvim/lush-template',
-		config = function()
-			vim.cmd('colorscheme naysayer')
-		end,
-		dependencies = 'rktjmp/lush.nvim',
-		priority = 1000,
+		'leg7/tacticat.nvim',
 		lazy = false,
+		priority = 1000,
+		opts = {
+			autoload = true,
+			highlight_column = {
+				enable = true,
+				number = 120,
+			},
+			integrations = {
+				which_key = true,
+				git_signs = true,
+				cmp = true,
+			}
+		},
 	},
 	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
+		'folke/which-key.nvim',
+		event = 'VeryLazy',
 		init = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
@@ -621,17 +595,17 @@ require('lazy').setup({
 		},
 		keys = {
 			-- Moving
-			{ '<c-k>', mode = 'n', function() require('smart-splits').move_cursor_up()    end, desc = "Smart split move up" },
-			{ '<c-j>', mode = 'n', function() require('smart-splits').move_cursor_down()  end, desc = "Smart split move down" },
-			{ '<c-h>', mode = 'n', function() require('smart-splits').move_cursor_left()  end, desc = "Smart split move left" },
-			{ '<c-l>', mode = 'n', function() require('smart-splits').move_cursor_right() end, desc = "Smart split move right" },
+			{ '<c-k>', mode = 'n', function() require('smart-splits').move_cursor_up()    end, desc = 'Smart split move up' },
+			{ '<c-j>', mode = 'n', function() require('smart-splits').move_cursor_down()  end, desc = 'Smart split move down' },
+			{ '<c-h>', mode = 'n', function() require('smart-splits').move_cursor_left()  end, desc = 'Smart split move left' },
+			{ '<c-l>', mode = 'n', function() require('smart-splits').move_cursor_right() end, desc = 'Smart split move right' },
 			-- Swapping
-			{ '<a-k>', mode = 'n', function() require('smart-splits').swap_buf_up()    end, desc = "Smart split move up" },
-			{ '<a-j>', mode = 'n', function() require('smart-splits').swap_buf_down()  end, desc = "Smart split move down" },
-			{ '<a-h>', mode = 'n', function() require('smart-splits').swap_buf_left()  end, desc = "Smart split move left" },
-			{ '<a-l>', mode = 'n', function() require('smart-splits').swap_buf_right() end, desc = "Smart split move right" },
+			{ '<a-k>', mode = 'n', function() require('smart-splits').swap_buf_up()    end, desc = 'Smart split move up' },
+			{ '<a-j>', mode = 'n', function() require('smart-splits').swap_buf_down()  end, desc = 'Smart split move down' },
+			{ '<a-h>', mode = 'n', function() require('smart-splits').swap_buf_left()  end, desc = 'Smart split move left' },
+			{ '<a-l>', mode = 'n', function() require('smart-splits').swap_buf_right() end, desc = 'Smart split move right' },
 			-- Resizing
-			{ '<a-r>', mode = 'n', function() require('smart-splits').start_resize_mode() end, noremap = true, desc = "Smart split resize mode" },
+			{ '<a-r>', mode = 'n', function() require('smart-splits').start_resize_mode() end, noremap = true, desc = 'Smart split resize mode' },
 		},
 	},
 },
@@ -645,6 +619,31 @@ require('lazy').setup({
 -- Settings --
 --------------
 
+vim.diagnostic.config({
+    underline = true,
+    signs = {
+        active = true,
+        text = {
+          [vim.diagnostic.severity.ERROR] = symbols.error,
+          [vim.diagnostic.severity.WARN]  = symbols.warn,
+          [vim.diagnostic.severity.HINT]  = symbols.hint,
+          [vim.diagnostic.severity.INFO]  = symbols.info,
+        },
+    },
+    virtual_text = false,
+    float = {
+        border = 'single',
+        format = function(diagnostic)
+            return string.format(
+                '%s (%s) [%s]',
+                diagnostic.message,
+                diagnostic.source,
+                diagnostic.code or diagnostic.user_data.lsp.code
+            )
+        end,
+    },
+})
+
 vim.opt.fileencoding = 'UTF-8'
 vim.opt.title = true
 vim.opt.shortmess = 'a'
@@ -652,14 +651,13 @@ vim.opt.lazyredraw = false
 vim.opt.scrolloff = 4
 
 vim.opt.termguicolors = true
--- vim.cmd('hi Normal guibg=NONE ctermbg=NONE') -- idk how to do this in lua the documentation is so bad
 vim.opt.cursorline = true
 vim.opt.fillchars = { eob = ' ' }
 vim.opt.wrap = true
 vim.opt.breakindent = true
 vim.opt.showbreak = '↳ '
 vim.api.nvim_set_hl(0, 'NonText', { bold = true, fg = cyan })
--- vim.fn.matchadd('ColorColumn', [[\%80v]], 100) -- This doesn't work with splits whatever vim sucks
+vim.opt.winborder = 'rounded'
 
 vim.opt.equalalways = false
 vim.opt.splitright = true
@@ -726,27 +724,27 @@ vim.api.nvim_create_autocmd({'BufEnter', 'BufWinEnter'}, {
 	end,
 })
 
-vim.api.nvim_create_autocmd("UIEnter", {
+vim.api.nvim_create_autocmd('UIEnter', {
 	callback = function()
 		if vim.g.neovide then
 			vim.opt.lazyredraw = false
-			vim.o.guifont = "monospace:h14:#e-subpixelantialias:#h-full"
+			vim.o.guifont = 'monospace:h14'
 			vim.o.linespace = 2
-			vim.g.neovide_cursor_vfx_mode = "pixiedust"
-			vim.g.neovide_opacity = 0.92
+			vim.g.neovide_cursor_vfx_mode = 'pixiedust'
+			vim.g.neovide_opacity = 1
 			vim.g.transparency = vim.g.neovide_opacity
 			vim.g.neovide_floating_blur_amount_x = 0
 			vim.g.neovide_floating_blur_amount_y = 0
 			vim.g.neovide_floating_shadow = false
 
-			vim.keymap.set({ "n", "v" }, "<leader>w", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
-			vim.keymap.set({ "n", "v" }, "<leader>q", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
-			vim.keymap.set({ "n" , "v" }, "<leader>c", ":lua vim.g.neovide_scale_factor = 1<CR>")
+			vim.keymap.set({ 'n', 'v' }, '<leader>w', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>')
+			vim.keymap.set({ 'n', 'v' }, '<leader>q', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>')
+			vim.keymap.set({ 'n' , 'v' }, '<leader>c', ':lua vim.g.neovide_scale_factor = 1<CR>')
 
 			local alpha = function()
-				return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
+				return string.format('%x', math.floor(255 * vim.g.transparency or 0.8))
 			end
-			vim.g.neovide_background_color = "#101623" .. alpha()
+			vim.g.neovide_background_color = '#101623' .. alpha()
 		end
 	end
 })
@@ -755,8 +753,8 @@ vim.api.nvim_create_autocmd("UIEnter", {
 -- Keymaps --
 -------------
 vim.keymap.set('n', 'Q', '<nop>')
--- vim.keymap.set('n', '<esc>', '<cmd>noh<cr>', { noremap = true }) -- Disabled because I breaks smart_splits resize mode
-vim.keymap.set('n', '<backspace>', '<cmd>noh<cr>', { noremap = true }) -- Disabled because I breaks smart_splits resize mode
+-- vim.keymap.set('n', '<esc>', '<cmd>noh<cr>', { noremap = true }) -- Disabled because it breaks smart_splits resize mode
+vim.keymap.set('n', '<backspace>', '<cmd>noh<cr>', { noremap = true })
 vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<cr>')
 vim.keymap.set('t', '<esc>', '<c-\\><c-n>')
 
@@ -784,3 +782,56 @@ vim.keymap.set('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<cr>')
 -- vim.keymap.set('n', '<c-j>', '<cmd>cprev<cr>')
 -- vim.keymap.set('n', '<leader>k', '<cmd>lnext<cr>')
 -- vim.keymap.set('n', '<leader>j', '<cmd>lprev<cr>')
+
+---------
+-- LSP --
+---------
+
+vim.lsp.config('lua_ls', {
+	settings = {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using
+				-- (most likely LuaJIT in the case of Neovim)
+				version = 'LuaJIT',
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = {
+					'vim',
+					'require'
+				},
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+})
+
+for i=1, #lsp_servers do
+	vim.lsp.enable(lsp_servers[i])
+end
+
+local wk = require('which-key')
+wk.add({
+	{
+		mode = 'n',
+		{ 'gd', function() vim.lsp.buf.definition()       end, desc = 'lsp: Go to definition of symbol' },
+		{ 'gD', function() vim.lsp.buf.declaration()      end, desc = 'lsp: Go to declaration of symbol' },
+		{ 'gi', function() vim.lsp.buf.implementation()   end, desc = 'lsp: Go to implementation of symbol' },
+		{ 'go', function() vim.lsp.buf.type_definition()  end, desc = 'lsp: Go to type definition of symbol' },
+		{ 'gR', function() vim.lsp.buf.references()       end, desc = 'lsp: Find references of symbol' },
+		{ 'gh', function() vim.lsp.buf.hover()            end, desc = 'lsp: Show information about symbol under the cursor' },
+		{ 'gr', function() vim.lsp.buf.rename()           end, desc = 'lsp: Rename symbol under cursor' },
+		{ 'ga', function() vim.lsp.buf.code_action()      end, desc = 'lsp: Show code actions for symbol' },
+		{ 'gs', function() vim.lsp.buf.signature_help({}) end, desc = 'lsp: Show signature help for function' },
+		{ 'gF',      mode = {'n', 'x'}, function() vim.lsp.buf.format({async = true}) end, desc = 'lsp: Format buffer (async)' },
+		{ '<c-s>',   mode = 'i',        function() vim.lsp.buf.signature_help({ close_events = { "CursorMoved", "InsertLeave" }}) end,desc = 'lsp: Show signature help for function' },
+	}
+})
