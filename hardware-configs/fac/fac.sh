@@ -9,9 +9,11 @@ sudo xbps-install -y brightnessctl kanshi
 
 sudo xbps-install -y mesa-dri vulkan-loader mesa-vulkan-intel intel-media-driver
 
-sudo xbps-install -y iwd dbus
-sudo ln -sf /etc/sv/dbus /var/service
-sudo ln -sf /etc/sv/iwd /var/service
-sudo unlink /var/service/wpa_supplicant
+# The default config is good enough for this laptop
+sudo xbps-install -y tlp
+sudo ln -sf /etc/sv/tlp/ /var/service/
 
-# TODO: install tlp
+sudo xbps-install -y iwd dbus
+sudo ln -sf /etc/sv/dbus/ /var/service/
+sudo ln -sf /etc/sv/iwd/ /var/service/
+sudo unlink /var/service/wpa_supplicant
