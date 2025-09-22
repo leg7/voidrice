@@ -17,7 +17,11 @@ cp /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
 
 # Dracut need objcopy from the clang package to make a UKI
 xbps-install -Sy -R https://repo-default.voidlinux.org/current -r /mnt \
-	base-system \
+	base-minimal base-files \
+	ncurses libgcc file less man-pages xfsprogs dosfstools \ # Packages from base-system that are missing from base-minimal
+	tzdata pciutils usbutils openssh dhcpcd kbd iproute2 iputils xbps neovim \
+	wifi-firmware traceroute ethtool kmod acpid eudev runit-void removed-packages \
+	doas iwd \
 	cryptsetup lvm2 \
 	clang systemd-boot-efistub sbctl efibootmgr
 
@@ -30,6 +34,9 @@ printf 'uefi=yes\nkernel_cmdline="quiet root=UUID=%s rd.luks.uuid=%s rd.lvm.vg=%
 xchroot /mnt chown root:root /
 xchroot /mnt chmod 755 /
 xchroot /mnt passwd root
+xchroot /mnt useradd -G wheel user
+xchroot /mnt passwd user
+xchroot /mnt echo "permit keepenv persist :wheel" > /etc/doas.conf
 xchroot /mnt echo "$hostname" > /etc/hostname
 xchroot /mnt echo "LANG=en_US.UTF-8" > /etc/locale.conf
 xchroot /mnt echo "en_US.UTF-8 UTF-8" >> /etc/default/libc-locales
