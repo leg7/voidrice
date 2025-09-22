@@ -37,5 +37,6 @@ if status is-interactive
 		dbus-run-session river
 	end
 
+	fish_vi_key_bindings
 	starship init fish | source
 end
