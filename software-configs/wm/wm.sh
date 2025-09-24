@@ -36,6 +36,7 @@ sudo xbps-install -y pipewire
 mkdir -p /etc/pipewire/pipewire.conf.d
 ln -sf /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire.conf.d/
 ln -sf /usr/share/examples/pipewire/20-pipewire-pulse.conf /etc/pipewire/pipewire.conf.d/
+sudo usermod -aG audio user
 
 # Bluetooth
 
