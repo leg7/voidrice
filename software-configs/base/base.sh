@@ -27,7 +27,10 @@ sudo ln -sf /etc/sv/openntpd/ /var/service
 sudo xbps-install -y dhcpcd
 sudo ln -sf /etc/sv/dhcpcd /var/service
 
-# TODO: Configure bpfilter firewall rules
+# Firewall
+
+sudo xbps-install -y nftables
+sudo ln -sf /etc/sv/nftables/ /var/service/
 
 # Must have
 sudo xbps-install -y \
