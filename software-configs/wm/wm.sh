@@ -33,7 +33,7 @@ sudo xbps-install -y \
 	PrismLauncher \
 	MangoHud
 
-# Heroic, cemu, osu lazer, wootility
+# TODO: Heroic, cemu, osu lazer, wootility
 
 # Dev tools
 sudo xbps-install -y \
@@ -79,8 +79,7 @@ cargo install --path ~/.local/share/inori
 sudo xbps-install -y bluez libspa-bluetooth
 sudo ln -sf /etc/sv/bluetoothd /var/service
 
-# Transmission torrents, vial, logseq, door-knocker, banana cursor, mime apps, portals, xdg-dirs
-# autologin
+# TODO: Transmission torrents, vial, logseq, door-knocker, banana cursor, mime apps, portals, autologin
 
 sudo xbps-reconfigure -f fontconfig
 

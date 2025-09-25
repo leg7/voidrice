@@ -1,0 +1,39 @@
+#!/usr/bin/sh
+#
+# Kernel hook for efibootmgr.
+#
+# Arguments passed to this script: $1 pkgname, $2 version.
+#
+PKGNAME="$1"
+VERSION="$2"
+
+. "${ROOTDIR}/etc/default/efibootmgr-kernel-hook"
+if [ "x${MODIFY_EFI_ENTRIES}" != x1 ]; then
+	exit 0
+fi
+
+# get major version, e.g. "4.8" for "linux4.8"
+major_version=$(echo $PKGNAME | cut -c 6-)
+
+# look for previous entry for this major kernel version
+existing_entry=$(efibootmgr | grep "Void Linux ${major_version}")
+
+# get the boot order
+# this is required because when in the next step the existing entry is removed,
+# it is also removed from the order so it needs to be restored later
+bootorder=$(efibootmgr |grep "BootOrder: " |cut -c 12-)
+
+# if existing, remove it
+if [ "$existing_entry" != "" ]; then
+/etc/kernel.d/post-remove/50-efibootmgr $PKGNAME
+fi
+
+system_disk="$(blkid -o value -s UUID -t PARTLABEL="$(hostname)Esp")"
+# create the new entry
+efibootmgr -qc \
+   	--disk "$system_disk" \
+	--label "Void Linux ${major_version}" \
+   	--loader /esp/EFI/BOOT/linux_-${VERSION}.efi
+
+# restore the boot order
+efibootmgr -qo $bootorder

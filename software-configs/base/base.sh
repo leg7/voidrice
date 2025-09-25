@@ -33,6 +33,7 @@ sudo xbps-install -y nftables
 sudo ln -sf /etc/sv/nftables/ /var/service/
 
 # Must have
+
 sudo xbps-install -y \
 	clang shellcheck \
 	neovim \
@@ -58,9 +59,7 @@ fi
 sudo xbps-install -y keyd
 sudo ln -sf /etc/sv/keyd/ /var/service
 
-# change default dracut reconfigure thing
-
-# Schedule fstrim
+# TODO: Schedule fstrim
 
 stow -R --no-folding --dir ./files -t ~ home
 sudo stow -R --no-folding --dir ./files -t / root
