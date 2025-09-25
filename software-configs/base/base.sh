@@ -62,6 +62,5 @@ sudo ln -sf /etc/sv/keyd/ /var/service
 
 # Schedule fstrim
 
-cd ./files
-stow -R --no-folding -t ~ home
-sudo stow -R --no-folding -t / root
+stow -R --no-folding --dir ./files -t ~ home
+sudo stow -R --no-folding --dir ./files -t / root

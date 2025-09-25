@@ -1,5 +1,10 @@
 #!/bin/sh
 
+(
+	cd ../base || exit
+	./base.sh
+)
+
 sudo xbps-install -Sy
 
 sudo xbps-install -y void-repo-nonfree
@@ -13,7 +18,7 @@ sudo usermod -aG _seatd user
 sudo xbps-install -y qt6-wayland qt5-wayland kwayland
 
 sudo xbps-install -y \
-	river xorg-server-xwayland xdg-desktop-portal-gtk yambar fuzzel swayidle swaylock wlogout fnott wlsunset kanshi \
+	river xorg-server-xwayland xdg-desktop-portal-gtk yambar fuzzel swayidle swaylock wlogout fnott wlsunset \
 	foot firefox imv mpv zathura nemo qalculate-gtk qdirstat gpick syncthing obs Signal-Desktop halloy android-file-transfer-linux \
 	newsboat \
 	wl-clipboard xlsclients lswt wlr-randr qrencode swaybg grim slurp satty libnotify \
@@ -23,6 +28,7 @@ sudo xbps-install -y \
 
 # Gaming
 sudo xbps-install -y \
+	void-repo-nonfree \
 	steam \
 	PrismLauncher \
 	MangoHud
@@ -47,10 +53,11 @@ sudo xbps-install -y \
 
 sudo xbps-install -y wayland wayland-devel wayland-protocols wlroots libxkbcommon libevdev pixman pkg-config zig
 git clone https://git.sr.ht/~novakane/rivercarro ~/.local/share/rivercarro
-cd ~/.local/share/rivercarro
-git checkout v0.5.0
-zig build -Doptimize=ReleaseSafe --prefix ~/.local
-cd -
+(
+	cd ~/.local/share/rivercarro || exit
+	git checkout v0.5.0
+	zig build -Doptimize=ReleaseSafe --prefix ~/.local
+)
 
 # Pipewire
 
@@ -65,8 +72,7 @@ sudo usermod -aG audio user
 sudo xbps-install -y mpd
 mkdir -p ~/.local/share/mpd/playlists ~/.local/state/mpd  ~/.local/cache/mpd
 git clone https://github.com/eshrh/inori ~/.local/share/inori
-cd ~/.local/share/inori
-cargo install --path .
+cargo install --path ~/.local/share/inori
 
 # Bluetooth
 
@@ -78,6 +84,5 @@ sudo ln -sf /etc/sv/bluetoothd /var/service
 
 sudo xbps-reconfigure -f fontconfig
 
-cd ./files
-stow -R --no-folding -t ~ home
-sudo stow -R --no-folding -t / root
+stow -R --no-folding --dir ./files -t ~ home
+sudo stow -R --no-folding --dir ./files -t / root
