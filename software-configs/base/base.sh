@@ -45,8 +45,15 @@ sudo xbps-install -y \
 	stow \
 	rsync
 
-chsh -s /usr/bin/fish
-sudo chsh -s /usr/bin/fish
+user_login_shell="$(getent passwd user | cut -d: -f7)"
+if "$user_login_shell" != "/usr/bin/fish"; then
+	chsh -s /usr/bin/fish
+fi
+
+root_login_shell="$(getent passwd user | cut -d: -f7)"
+if "$root_login_shell" != "/usr/bin/fish"; then
+	sudo chsh -s /usr/bin/fish
+fi
 
 sudo xbps-install -y keyd
 sudo ln -sf /etc/sv/keyd/ /var/service
