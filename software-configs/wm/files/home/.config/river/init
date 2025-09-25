@@ -14,7 +14,7 @@ export XDG_SESSION_DESKTOP=sway
 
 export GTK_THEME=Adwaita
 
-dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
+dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
 
 #-----------#
 # Autostart #
@@ -33,5 +33,5 @@ foot --server &
 fnott &
 wlsunset -S 6:00 -s 21:00 -t 4000 -d 900 &
 easyeffects --gapplication-service &
-yambar-reload &
 kanshi &
+# yambar-reload
