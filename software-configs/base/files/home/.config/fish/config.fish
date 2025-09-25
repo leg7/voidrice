@@ -15,6 +15,22 @@ set -gx PATH "$PATH:$HOME/.local/bin"
 if test -z "$XDG_RUNTIME_DIR"
 	set -gx XDG_RUNTIME_DIR (mktemp -d "$XDG_STATE_HOME/$(id -u)-runtime-dir.XXX")
 end
+set -gx XDG_DESKTOP_DIR "$HOME"
+set -gx XDG_DOCUMENTS_DIR "$HOME/documents"
+set -gx XDG_DOWNLOAD_DIR "$HOME"
+set -gx XDG_MUSIC_DIR "$HOME/audio"
+set -gx XDG_PICTURES_DIR "$HOME/pics"
+set -gx XDG_PUBLICSHARE_DIR "$HOME/share"
+set -gx XDG_TEMPLATES_DIR "$HOME"
+set -gx XDG_VIDEOS_DIR "$HOME/vids"
+mkdir -p "$XDG_DESKTOP_DIR" \
+	"$XDG_DOCUMENTS_DIR" \
+	"$XDG_DOWNLOAD_DIR" \
+	"$XDG_MUSIC_DIR" \
+	"$XDG_PICTURES_DIR" \
+	"$XDG_PUBLICSHARE_DIR" \
+	"$XDG_TEMPLATES_DIR" \
+	"$XDG_VIDEOS_DIR"
 
 set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME/pass"
 set -gx MBSYNCRC "$XDG_CONFIG_HOME/isync/mbsyncrc"
