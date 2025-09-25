@@ -25,14 +25,13 @@ dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
 # without restarting all the programs above)
 /home/user/.config/river/config &
 /home/user/.config/river/maps &
-wait
 
 pipewire &
-sg audio -c mpd &
 setbg -i &
 foot --server &
 fnott &
 wlsunset -S 6:00 -s 21:00 -t 4000 -d 900 &
 easyeffects --gapplication-service &
-kanshi &
-# yambar-reload
+
+sg audio -c mpd # mpd must be fully initialized for the yambar mpd module to work
+kanshi # Kanshi autostarts yambar
