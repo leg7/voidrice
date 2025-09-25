@@ -28,6 +28,7 @@ dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
 wait
 
 pipewire &
+sg audio -c mpd &
 setbg -i &
 foot --server &
 fnott &

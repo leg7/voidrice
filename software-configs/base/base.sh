@@ -11,7 +11,7 @@ sudo ln -sf /etc/sv/acpid/ /var/service
 
 # Logging
 
-sudo xbps-install -y socklog
+sudo xbps-install -y socklog socklog-void
 sudo ln -sf /etc/sv/socklog-unix/ /var/service
 sudo ln -sf /etc/sv/nanoklogd/ /var/service
 

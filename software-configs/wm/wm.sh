@@ -17,34 +17,9 @@ sudo xbps-install -y \
 	foot firefox imv mpv zathura nemo qalculate-gtk qdirstat gpick syncthing obs Signal-Desktop halloy android-file-transfer-linux \
 	newsboat \
 	wl-clipboard xlsclients lswt wlr-randr qrencode swaybg grim slurp satty libnotify \
-	mpd mpc helvum pulsemixer easyeffects guitarix2 pamixer \
+	mpc helvum pulsemixer easyeffects guitarix2 pamixer \
 	adwaita-icon-theme adwaita-qt \
-	noto-fonts-cjk noto-fonts-emoji noto-fonts-ttf nerd-fonts-symbols-ttf
-
-# Install rivercarro (not in void repos)
-
-sudo xbps-install -y wayland wayland-devel wayland-protocols wlroots libxkbcommon libevdev pixman pkg-config zig
-git clone https://git.sr.ht/~novakane/rivercarro ~/.local/share/rivercarro
-cd ~/.local/share/rivercarro
-git checkout v0.5.0
-zig build -Doptimize=ReleaseSafe --prefix ~/.local
-cd -
-
-# Pipewire
-
-sudo xbps-install -y pipewire
-mkdir -p /etc/pipewire/pipewire.conf.d
-ln -sf /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire.conf.d/
-ln -sf /usr/share/examples/pipewire/20-pipewire-pulse.conf /etc/pipewire/pipewire.conf.d/
-sudo usermod -aG audio user
-
-# Bluetooth
-
-sudo xbps-install -y bluez libspa-bluetooth
-sudo ln -sf /etc/sv/bluetoothd /var/service
-
-# Transmission torrents, vial, logseq, door-knocker, banana cursor, mime apps, portals, xdg-dirs
-# autologin
+	noto-fonts-cjk noto-fonts-emoji noto-fonts-ttf nerd-fonts-symbols-ttf \
 
 # Gaming
 sudo xbps-install -y \
@@ -57,7 +32,7 @@ sudo xbps-install -y \
 # Dev tools
 sudo xbps-install -y \
 	pandoc \
-	clang \
+	llvm \
 	python \
 	ghc \
 	openjdk \
@@ -65,7 +40,41 @@ sudo xbps-install -y \
 	task \
 	groff sent \
 	ImageMagick ffmpeg yt-dlp \
+	rust cargo \
 	jq
+
+# Install rivercarro (not in void repos)
+
+sudo xbps-install -y wayland wayland-devel wayland-protocols wlroots libxkbcommon libevdev pixman pkg-config zig
+git clone https://git.sr.ht/~novakane/rivercarro ~/.local/share/rivercarro
+cd ~/.local/share/rivercarro
+git checkout v0.5.0
+zig build -Doptimize=ReleaseSafe --prefix ~/.local
+cd -
+
+# Pipewire
+
+sudo xbps-install -y pipewire wireplumber
+mkdir -p /etc/pipewire/pipewire.conf.d
+ln -sf /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire.conf.d/
+ln -sf /usr/share/examples/pipewire/20-pipewire-pulse.conf /etc/pipewire/pipewire.conf.d/
+sudo usermod -aG audio user
+
+# Mpd
+
+sudo xbps-install -y mpd
+mkdir -p ~/.local/share/mpd/playlists ~/.local/state/mpd  ~/.local/cache/mpd
+git clone https://github.com/eshrh/inori ~/.local/share/inori
+cd ~/.local/share/inori
+cargo install --path .
+
+# Bluetooth
+
+sudo xbps-install -y bluez libspa-bluetooth
+sudo ln -sf /etc/sv/bluetoothd /var/service
+
+# Transmission torrents, vial, logseq, door-knocker, banana cursor, mime apps, portals, xdg-dirs
+# autologin
 
 sudo xbps-reconfigure -f fontconfig
 
