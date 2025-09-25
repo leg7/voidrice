@@ -46,12 +46,12 @@ sudo xbps-install -y \
 	rsync
 
 user_login_shell="$(getent passwd user | cut -d: -f7)"
-if "$user_login_shell" != "/usr/bin/fish"; then
+if test "$user_login_shell" != "/usr/bin/fish"; then
 	chsh -s /usr/bin/fish
 fi
 
 root_login_shell="$(getent passwd user | cut -d: -f7)"
-if "$root_login_shell" != "/usr/bin/fish"; then
+if test "$root_login_shell" != "/usr/bin/fish"; then
 	sudo chsh -s /usr/bin/fish
 fi
 
