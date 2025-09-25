@@ -1,9 +1,9 @@
-background: &background "101623ff"
-foreground: &foreground "fff2f0ff"
-selection: &selection "202d46ff"
-red: &red "ff4766ff"
-green: &green "a6c18bff"
-yellow: &yellow "fb8950ff"
+background: &background "ffffffff"
+foreground: &foreground "000000ff"
+foreground_dim: &foreground_dim "4e4e4e95"
+color_attention: &color_attention "c9007aff"
+color_focused: &color_focused "ffec00ff"
+color_charging: &color_charging "152eafff"
 
 dmargin: &dmargin 16
 margin: &margin 8
@@ -45,7 +45,7 @@ bar:
             conditions:
               charging:
                 ramp:
-                  foreground: *yellow
+                  foreground: *color_charging
                   tag: capacity
                   items:
                     - string: {text: "󰢜 {capacity}%"}
@@ -80,7 +80,7 @@ bar:
 
             conditions:
               muted && type == "sink":
-                string: {text: "󰸈 {cubic_volume}%", foreground: *red}
+                string: {text: "󰸈 {cubic_volume}%", foreground: *color_attention}
               ~muted && type == "sink":
                 ramp:
                   tag: cubic_volume
@@ -101,7 +101,7 @@ bar:
               right: "antenna -t bluetooth"
             conditions:
               bluetooth: {string: {text: 󰂯}}
-              ~bluetooth: {string: {text: 󰂲, foreground: *red}}
+              ~bluetooth: {string: {text: 󰂲, foreground: *color_attention}}
 
     - network:
         spacing: 0
@@ -118,7 +118,7 @@ bar:
               name == "wlan0":
                 map:
                   default:
-                    string: {text: 󰤭, foreground: *red}
+                    string: {text: 󰤭, foreground: *color_attention}
                   conditions:
                     ssid != "":
                       ramp:
@@ -140,9 +140,9 @@ bar:
               id > 7:
                 string: {text: }
               urgent:
-                string: {text: "{id}", margin: *margin, deco: { background: {color: *red} }}
+                string: {text: "{id}", margin: *margin, deco: { background: {color: *color_attention} }}
               focused:
-                string: {text: "{id}", margin: *margin, deco: { background: {color: *green} }}
+                string: {text: "{id}", margin: *margin, deco: { background: {color: *color_focused} }}
               occupied:
                 string: {text: "{id}", margin: *margin }
 
@@ -158,10 +158,10 @@ bar:
             conditions:
               state == stopped:
                 - string: {text: 󰝛}
-                - string: {text: " Stopped", foreground: ffffff66}
+                - string: {text: " Stopped", foreground: *foreground_dim }
               state == offline:
                 - string: {text: 󰝛}
-                - string: {text: " Offline", foreground: ffffff66}
+                - string: {text: " Offline", foreground: *foreground_dim }
               (state == paused || state == playing) && (artist != "" && title != ""):
                 list:
                   spacing: 0
@@ -169,17 +169,24 @@ bar:
                     - string: {text: "󰝚 "}
                     - map:
                         conditions:
-                          state == playing: {string: {text: "{artist}"}}
-                          state == paused: {string: {text: "{artist}", foreground: ffffff66}}
-                    - string: {text: " | ", foreground: ffffff66}
+                          state == playing: {string: {text: "{artist}", foreground: *color_charging}}
+                          state == paused: {string: {text: "{artist}", foreground: *foreground_dim}}
                     - map:
                         conditions:
-                          state == playing: {string: {text: "{title}", foreground: ffa0a0ff}}
-                          state == paused: {string: {text: "{title}", foreground: ffffff66}}
+                          state == playing: {string: {text: " | ", foreground: *foreground}}
+                          state == paused: {string: {text: " | ", foreground: *foreground_dim}}
                     - map:
                         conditions:
-                          state == playing: {string: {text: " | {pos}/{end}"}}
-                          state == paused: {string: {text: " | {pos}/{end}", foreground: ffffff66}}
+                          state == playing: {string: {text: "{title}", foreground: *color_attention}}
+                          state == paused: {string: {text: "{title}", foreground: *foreground_dim}}
+                    - map:
+                        conditions:
+                          state == playing: {string: {text: " | ", foreground: *foreground}}
+                          state == paused: {string: {text: " | ", foreground: *foreground_dim}}
+                    - map:
+                        conditions:
+                          state == playing: {string: {text: "{pos}/{end}", foreground: *foreground}}
+                          state == paused: {string: {text: "{pos}/{end}", foreground: *foreground_dim}}
               (state == paused || state == playing):
                 list:
                   spacing: 0
@@ -188,11 +195,11 @@ bar:
                     - map:
                         conditions:
                           state == playing: {string: {text: "{file}"}}
-                          state == paused: {string: {text: "{file}", foreground: ffffff66}}
+                          state == paused: {string: {text: "{file}", foreground: *foreground_dim}}
                     - map:
                         conditions:
                           state == playing: {string: {text: " | {pos}/{end}"}}
-                          state == paused: {string: {text: " | {pos}/{end}", foreground: ffffff66}}
+                          state == paused: {string: {text: " | {pos}/{end}", foreground: *foreground_dim}}
 
     - clock:
         date-format: "%a %d/%m/%Y"
