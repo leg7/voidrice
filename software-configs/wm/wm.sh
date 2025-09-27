@@ -87,7 +87,7 @@ sudo xbps-install -y transmission
 git clone https://github.com/intuis/rustmission ~/.local/share/rustmission
 cargo install --path ~/.local/share/rustmission/rm-main
 
-# TODO: Vial, logseq, door-knocker, mime apps, portals, autologin
+# TODO: Vial, logseq, door-knocker, mime apps, portals
 
 sudo xbps-reconfigure -f fontconfig
 
