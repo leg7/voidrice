@@ -71,6 +71,7 @@ sudo usermod -aG audio user
 
 sudo xbps-install -y mpd
 mkdir -p ~/.local/share/mpd/playlists ~/.local/state/mpd  ~/.local/cache/mpd
+
 git clone https://github.com/eshrh/inori ~/.local/share/inori
 cargo install --path ~/.local/share/inori
 
@@ -79,7 +80,14 @@ cargo install --path ~/.local/share/inori
 sudo xbps-install -y bluez libspa-bluetooth
 sudo ln -sf /etc/sv/bluetoothd /var/service
 
-# TODO: Transmission torrents, vial, logseq, door-knocker, mime apps, portals, autologin
+# Transmission
+
+sudo xbps-install -y transmission
+
+git clone https://github.com/intuis/rustmission ~/.local/share/rustmission
+cargo install --path ~/.local/share/rustmission/rm-main
+
+# TODO: Vial, logseq, door-knocker, mime apps, portals, autologin
 
 sudo xbps-reconfigure -f fontconfig
 
