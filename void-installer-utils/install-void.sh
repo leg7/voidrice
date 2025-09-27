@@ -1,6 +1,9 @@
-#!/bin/sh
+#!/bin/sh -x
 
-# TODO: Check if hostname is given
+if test "$1" = ""; then
+	printf "Please provide the hostname of the system you want to install void to as the first and only argument\n"
+	exit
+fi
 
 hostname="$1"
 
@@ -8,7 +11,6 @@ mount -m -L "${hostname}R" /mnt
 mount -m -L "${hostname}H" /mnt/home
 mount -m PARTLABEL="${hostname}Esp" /mnt/esp
 
-xbps-install -Sy mkswap
 mkswap -U clear --size 4G --file /mnt/swapfile
 swapon /mnt/swapfile
 
@@ -17,18 +19,19 @@ cp /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
 
 # Dracut need objcopy from the clang package to make a UKI
 xbps-install -Sy -R https://repo-default.voidlinux.org/current -r /mnt \
-	base-minimal base-files \
-	ncurses libgcc file less man-pages xfsprogs dosfstools \ # Packages from base-system that are missing from base-minimal
+	base-minimal base-files linux \
+	ncurses libgcc file less man-pages xfsprogs dosfstools \
 	tzdata pciutils usbutils openssh dhcpcd kbd iproute2 iputils xbps neovim \
 	wifi-firmware traceroute ethtool kmod acpid eudev runit-void removed-packages \
-	doas iwd \
-	cryptsetup lvm2 \
+	opendoas iwd \
+	cryptsetup lvm2 dracut \
 	clang systemd-boot-efistub sbctl efibootmgr
 
 xgenfstab /mnt > /mnt/etc/fstab
 
 root_uuid="$(blkid -o value -s UUID -t LABEL="${hostname}R")"
 luks_uuid="$(blkid -o value -s UUID -t PARTLABEL="${hostname}Luks")"
+mkdir -p /mnt/etc/dracut.conf.d/
 printf 'uefi=yes\nkernel_cmdline="quiet root=UUID=%s rd.luks.uuid=%s rd.lvm.vg=%s"\n' "$root_uuid" "$luks_uuid" "${hostname}_system" > /mnt/etc/dracut.conf.d/uki.conf
 
 xchroot /mnt chown root:root /
@@ -43,9 +46,9 @@ xchroot /mnt echo "en_US.UTF-8 UTF-8" >> /etc/default/libc-locales
 xchroot /mnt xbps-reconfigure -f glibc-locales
 xchroot /mnt xbps-reconfigure -fa
 xchroot /mnt mkdir -p /esp/EFI/BOOT
-xchroot /mnt dracut --force --uefi /esp/EFI/BOOT/BOOTx64.efi --kver 6.12.45_1
+xchroot /mnt dracut --force --uefi /esp/EFI/BOOT/BOOTx64.efi --kver 6.12.49_1
 
-system_disk="$(blkid -o value -s UUID -t PARTLABEL="${hostname}Esp")"
+system_disk="$(blkid -o device -t PARTLABEL="${hostname}Esp")"
 xchroot /mnt efibootmgr --create --disk "$system_disk" --loader /esp/EFI/BOOT/BOOTx64.efi --label "Void Linux"
 
 umount -R /mnt
