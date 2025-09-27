@@ -79,7 +79,7 @@ cargo install --path ~/.local/share/inori
 sudo xbps-install -y bluez libspa-bluetooth
 sudo ln -sf /etc/sv/bluetoothd /var/service
 
-# TODO: Transmission torrents, vial, logseq, door-knocker, banana cursor, mime apps, portals, autologin
+# TODO: Transmission torrents, vial, logseq, door-knocker, mime apps, portals, autologin
 
 sudo xbps-reconfigure -f fontconfig
 
