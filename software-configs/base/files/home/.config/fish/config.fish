@@ -1,4 +1,35 @@
+function fzf-cd
+	cd (fd -t d | fzf)
+end
+
+function fzf-path
+	readlink -f (fd | fzf) | tr -d '\n\r'
+end
+
+function fzf-copy-path
+	fzf-path | wl-copy
+end
+
+function fzf-xdg-open
+	xdg-open (fzf-path)
+end
+
+function fzf-history
+	history search | fzf | wl-copy
+end
+
 if status is-interactive
+	for mode in default normal insert
+		bind -M $mode \cg "xdg-open ." # g for gui
+
+		bind -M $mode \cw "printf '\n'; fzf-cd; commandline -f repaint" # w for working dir
+		bind -M $mode \ch "printf '\n'; fzf-history; commandline -f repaint"
+		bind -M $mode \cp "printf '\n'; fzf-copy-path; commandline -f repaint"
+		bind -M $mode \cf "printf '\n'; fzf-xdg-open; commandline -f repaint"
+	end
+
+	bind -M insert \ca "accept-autosuggestion" # a for accept
+
 	starship init fish | source
 end
 
