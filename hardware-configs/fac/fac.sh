@@ -13,7 +13,6 @@ sudo ln -sf /etc/sv/tlp/ /var/service/
 sudo xbps-install -y iwd dbus
 sudo ln -sf /etc/sv/dbus/ /var/service/
 sudo ln -sf /etc/sv/iwd/ /var/service/
-sudo unlink /var/service/wpa_supplicant
 
 (
 	cd ../../software-configs/wm || exit
