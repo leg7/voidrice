@@ -45,11 +45,13 @@ if status is-login
 
 	# XDG
 
-	set -gx XDG_CACHE_HOME "$HOME/.local/cache"
+	set -gx LOCAL_HOME "$HOME/.local"
+	set -gx XDG_CACHE_HOME "$LOCAL_HOME/cache"
 	set -gx XDG_CONFIG_HOME "$HOME/.config"
-	set -gx XDG_DATA_HOME "$HOME/.local/share"
-	set -gx XDG_STATE_HOME "$HOME/.local/state"
-	set -gx PATH "$PATH:$HOME/.local/bin"
+	set -gx XDG_DATA_HOME "$LOCAL_HOME/share"
+	set -gx XDG_STATE_HOME "$LOCAL_HOME/state"
+	set -gx BIN_HOME "$LOCAL_HOME/bin"
+	set -gx PATH "$PATH:$BIN_HOME"
 	if test -z "$XDG_RUNTIME_DIR"
 		set -gx XDG_RUNTIME_DIR (mktemp -d "$XDG_STATE_HOME/$(id -u)-runtime-dir.XXX")
 	end
@@ -80,11 +82,12 @@ if status is-login
 	set -gx CUDA_CACHE_PATH "$XDG_CACHE_HOME/nv"
 	set -gx WINEPREFIX "$XDG_DATA_HOME/wine"
 	set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
-	set -gx CARGO_INSTALL_ROOT "$HOME/.local"
+	set -gx CARGO_INSTALL_ROOT "$LOCAL_HOME"
 	set -gx ANDROID_USER_HOME "$XDG_DATA_HOME/android"
 	set -gx GRADLE_USER_HOME "$XDG_DATA_HOME/gradle"
 	set -gx LEIN_HOME "$XDG_DATA_HOME/lein"
 	set -gx _JAVA_OPTIONS "-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
+	set -gx GOPATH "$LOCAL_HOME"
 
 	if test (tty) = "/dev/tty1"
 		dbus-run-session river
