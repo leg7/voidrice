@@ -84,6 +84,7 @@ sudo ln -sf /etc/sv/bluetoothd /var/service
 
 sudo xbps-install -y transmission
 
+sudo xbps-install -y openssl-devel
 git clone https://github.com/intuis/rustmission ~/.local/share/rustmission
 cargo install --path ~/.local/share/rustmission/rm-main
 
