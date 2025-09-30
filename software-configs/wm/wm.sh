@@ -43,7 +43,7 @@ sudo xbps-install -y \
 	llvm tcc make cmake pkg-config \
 	python \
 	ghc \
-	openjdk gradle apache-maven \
+	openjdk21 gradle apache-maven \
 	neovide \
 	task \
 	groff sent \
