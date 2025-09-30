@@ -22,10 +22,12 @@ if status is-interactive
 	for mode in default normal insert
 		bind -M $mode \cg "setsid -f xdg-open ." # g for gui
 
-		bind -M $mode \cw "printf '\n'; fzf-cd; commandline -f repaint" # w for working dir
-		bind -M $mode \ch "printf '\n'; fzf-history; commandline -f repaint"
-		bind -M $mode \cp "printf '\n'; fzf-copy-path; commandline -f repaint"
-		bind -M $mode \cf "printf '\n'; fzf-xdg-open; commandline -f repaint"
+		bind -M $mode 'ctrl-w' "fzf-cd; commandline -f repaint" # w for working dir
+		bind -M $mode 'ctrl-h' "fzf-history; commandline -f repaint"
+		bind -M $mode 'ctrl-p' "fzf-copy-path; commandline -f repaint"
+		bind -M $mode 'ctrl-f' "fzf-xdg-open; commandline -f repaint"
+		bind -M $mode 'alt-l' "ls -lahv --group-directories-first; commandline -f repaint"
+		bind -M $mode 'alt-t' "tree -L 3; commandline -f repaint"
 	end
 
 	bind -M insert \ca "accept-autosuggestion" # a for accept
