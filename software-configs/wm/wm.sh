@@ -19,7 +19,9 @@ sudo xbps-install -y qt6-wayland qt5-wayland kwayland
 
 sudo xbps-install -y \
 	river xorg-server-xwayland xdg-desktop-portal-gtk yambar fuzzel swayidle swaylock wlogout fnott wlsunset \
-	foot firefox imv mpv zathura nemo qalculate-gtk qdirstat gpick syncthing obs Signal-Desktop halloy android-file-transfer-linux \
+	foot firefox imv mpv nemo qalculate-gtk qdirstat gpick syncthing obs  android-file-transfer-linux \
+	Signal-Desktop halloy \
+	zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps \
 	newsboat \
 	wl-clipboard xlsclients lswt wlr-randr qrencode swaybg grim slurp satty libnotify \
 	mpc helvum pulsemixer easyeffects guitarix2 pamixer \
