@@ -296,11 +296,6 @@ require('lazy').setup({
 		keys = { 'cs', 'ds', 'ys', { 'S', mode = 'x' } },
 	},
 	{
-		'numToStr/Comment.nvim',
-		opts = {},
-		keys = { 'gc', 'gb', { 'gc', mode = 'x' }, { 'gb', mode = 'x' } },
-	},
-	{
 		'gbprod/substitute.nvim',
 		opts = {},
 		keys = {
@@ -656,7 +651,6 @@ vim.opt.fillchars = { eob = ' ' }
 vim.opt.wrap = true
 vim.opt.breakindent = true
 vim.opt.showbreak = '↳ '
-vim.api.nvim_set_hl(0, 'NonText', { bold = true, fg = cyan })
 vim.opt.winborder = 'rounded'
 
 vim.opt.equalalways = false
@@ -722,6 +716,17 @@ vim.api.nvim_create_autocmd({'BufEnter', 'BufWinEnter'}, {
 	callback = function()
 		vim.o.filetype = 'prolog'
 	end,
+})
+
+
+-- Visuals
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+	vim.highlight.on_yank()
+  end,
 })
 
 vim.api.nvim_create_autocmd('UIEnter', {
@@ -790,26 +795,14 @@ vim.keymap.set('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<cr>')
 vim.lsp.config('lua_ls', {
 	settings = {
 		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using
-				-- (most likely LuaJIT in the case of Neovim)
-				version = 'LuaJIT',
-			},
+			runtime = { version = 'LuaJIT', },
 			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = {
-					'vim',
-					'require'
-				},
+				globals = { 'vim', 'require' }, -- Get the language server to recognize the `vim` global
 			},
 			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
+				library = vim.api.nvim_get_runtime_file("", true), -- Make the server aware of Neovim runtime files
 			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
-			},
+			telemetry = { enable = false, },
 		},
 	},
 })
