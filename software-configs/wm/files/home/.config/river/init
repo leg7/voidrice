@@ -33,6 +33,7 @@ fnott &
 wlsunset -S 6:00 -s 21:00 -t 4000 -d 900 &
 easyeffects --gapplication-service &
 transmission-daemon &
+syncthing --no-browser &
 
 sg audio -c mpd # mpd must be fully initialized for the yambar mpd module to work
 kanshi # Kanshi autostarts yambar
