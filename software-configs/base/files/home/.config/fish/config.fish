@@ -11,7 +11,7 @@ function fzf-copy-path
 end
 
 function fzf-xdg-open
-	xdg-open (fzf-path)
+	setsid -f xdg-open (fzf-path)
 end
 
 function fzf-history
