@@ -38,10 +38,10 @@ sudo xbps-install -y \
 # Dev tools
 sudo xbps-install -y \
 	pandoc \
-	llvm \
+	llvm tcc make cmake pkg-config \
 	python \
 	ghc \
-	openjdk \
+	openjdk gradle apache-maven \
 	neovide \
 	task \
 	groff sent \
