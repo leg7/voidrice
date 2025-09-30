@@ -20,7 +20,7 @@ end
 
 if status is-interactive
 	for mode in default normal insert
-		bind -M $mode \cg "xdg-open ." # g for gui
+		bind -M $mode \cg "setsid -f xdg-open ." # g for gui
 
 		bind -M $mode \cw "printf '\n'; fzf-cd; commandline -f repaint" # w for working dir
 		bind -M $mode \ch "printf '\n'; fzf-history; commandline -f repaint"
