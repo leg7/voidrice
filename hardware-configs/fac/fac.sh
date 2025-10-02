@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo xbps-install -y void-repo-nonfree intel-ucode
+sudo xbps-install -y void-repo-nonfree intel-ucode sof-firmware
 
 sudo xbps-install -y brightnessctl kanshi
 
