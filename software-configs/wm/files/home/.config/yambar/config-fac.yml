@@ -154,7 +154,7 @@ bar:
           map:
             on-click:
               left: "mpc toggle"
-              right: sh -c "riverctl set-focused-tags $((1 << 3)) && pgrep ncmpcpp || setsid -f footclient ncmpcpp"
+              right: sh -c "riverctl set-focused-tags $((1 << 3)) && pgrep inori || setsid -f footclient inori"
             conditions:
               state == stopped:
                 - string: {text: 󰝛}

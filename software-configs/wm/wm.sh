@@ -40,8 +40,8 @@ sudo xbps-install -y \
 # Dev tools
 sudo xbps-install -y \
 	pandoc \
-	llvm tcc make cmake pkg-config \
-	python \
+	llvm19 tcc make cmake pkg-config \
+	python python3-pip \
 	ghc \
 	openjdk21 gradle apache-maven \
 	neovide \
@@ -49,6 +49,7 @@ sudo xbps-install -y \
 	groff sent \
 	ImageMagick ffmpeg yt-dlp \
 	rust cargo \
+	go gopls \
 	jq
 
 # Install rivercarro (not in void repos)
@@ -64,18 +65,13 @@ git clone https://git.sr.ht/~novakane/rivercarro ~/.local/share/rivercarro
 # Pipewire
 
 sudo xbps-install -y pipewire wireplumber
-mkdir -p /etc/pipewire/pipewire.conf.d
-ln -sf /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire.conf.d/
-ln -sf /usr/share/examples/pipewire/20-pipewire-pulse.conf /etc/pipewire/pipewire.conf.d/
 sudo usermod -aG audio user
 
 # Mpd
 
 sudo xbps-install -y mpd
 mkdir -p ~/.local/share/mpd/playlists ~/.local/state/mpd  ~/.local/cache/mpd
-
-git clone https://github.com/eshrh/inori ~/.local/share/inori
-cargo install --path ~/.local/share/inori
+cargo install inori
 
 # Bluetooth
 
@@ -85,10 +81,13 @@ sudo ln -sf /etc/sv/bluetoothd /var/service
 # Transmission
 
 sudo xbps-install -y transmission
-
 sudo xbps-install -y openssl-devel
-git clone https://github.com/intuis/rustmission ~/.local/share/rustmission
-cargo install --path ~/.local/share/rustmission/rm-main
+cargo install rustmission
+
+# Other utilities
+
+cargo install inlyne # inlyne markdown viewer
+go install github.com/hhatto/gocloc/cmd/gocloc@latest # lines of code counter
 
 # TODO: Vial, logseq, door-knocker, mime apps, portals
 

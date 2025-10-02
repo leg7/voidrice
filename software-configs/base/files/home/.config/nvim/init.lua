@@ -43,6 +43,7 @@ local lsp_servers = {
 	'jdtls',
 	'pylsp',
 	'lua_ls',
+	'gopls',
 }
 
 require('lazy').setup({

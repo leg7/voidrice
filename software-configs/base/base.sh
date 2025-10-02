@@ -35,7 +35,7 @@ sudo ln -sf /etc/sv/nftables/ /var/service/
 # Must have
 
 sudo xbps-install -y \
-	clang shellcheck \
+	llvm19 shellcheck \
 	neovim \
 	task \
 	tree fzf fd ripgrep tealdeer xdg-utils \
