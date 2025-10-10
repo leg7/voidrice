@@ -7,8 +7,6 @@
 
 sudo xbps-install -Sy
 
-sudo xbps-install -y void-repo-nonfree
-
 # Graphical wayland stuff
 
 sudo xbps-install -y seatd
@@ -30,10 +28,11 @@ sudo xbps-install -y \
 
 # Gaming
 sudo xbps-install -y \
-	void-repo-nonfree \
-	steam \
 	PrismLauncher \
-	MangoHud
+	MangoHud \
+	void-repo-multilib void-repo-multilib-nonfree \
+	libgcc-32bit libstdc++-32bit libdrm-32bit libglvnd-32bit mesa-dri-32bit libcurl-32bit \
+	steam
 
 # TODO: Heroic, cemu, osu lazer, wootility
 
@@ -62,7 +61,7 @@ sudo xbps-install -y \
 sudo xbps-install -y gdb libX11-devel freetype-devel
 git clone --depth=1 https://github.com/nakst/gf.git ~/.local/share/gf
 (
-	cd ~/.local/share/gf
+	cd ~/.local/share/gf || exit
 	cp extensions_v5/*.cpp .
 	./build.sh
 	cp gf2 ~/.local/bin
