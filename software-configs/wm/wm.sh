@@ -37,19 +37,26 @@ sudo xbps-install -y \
 
 # TODO: Heroic, cemu, osu lazer, wootility
 
-# Dev tools
+# Languages
 sudo xbps-install -y \
-	pandoc \
-	llvm19 tcc make cmake pkg-config \
-	python python3-pip \
-	ghc \
-	openjdk21 gradle apache-maven \
-	neovide \
-	task \
-	groff sent \
-	ImageMagick ffmpeg yt-dlp \
-	rust cargo \
+	llvm19 tcc make cmake pkg-config gdb \
+	asm-lsp \
+	shellcheck bash-language-server \
 	go gopls \
+	ghc haskell-language-server \
+	zig zls \
+	rust cargo rust-analyzer \
+	lua lua-language-server \
+	python python3-pip \
+	openjdk21 gradle apache-maven \
+	nodejs pnpm
+
+# Other dev tools
+sudo xbps-install -y \
+	neovide git curl unzip tar gzip \
+	task \
+	groff sent pandoc \
+	ImageMagick ffmpeg yt-dlp \
 	jq
 
 # Install rivercarro (not in void repos)

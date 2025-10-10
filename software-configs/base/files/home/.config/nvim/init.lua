@@ -28,22 +28,27 @@ local symbols = {
 	info  = '🤓',
 }
 
--- Make sure these servers are installed on your system
 local lsp_servers = {
-	'zls',
-	'hls',
+	'clangd',
 	'asm_lsp',
 	'bashls',
-	'ocamllsp',
-	'clangd',
-	'nixd',
+	'gopls',
+	'hls',
+	'zls',
+	'rust_analyzer',
+	'lua_ls',
+
 	'emmet_ls',
 	'ts_ls',
-	'rust_analyzer',
 	'jdtls',
 	'pylsp',
-	'lua_ls',
-	'gopls',
+}
+
+local lsp_servers_for_mason_to_install = {
+	'emmet_ls',
+	'ts_ls',
+	'jdtls',
+	'pylsp',
 }
 
 require('lazy').setup({
@@ -162,6 +167,20 @@ require('lazy').setup({
 				vim.lsp.config(lsp_servers[i], { capabilities = c })
 			end
 		end
+	},
+	{
+		"mason-org/mason.nvim",
+		opts = {},
+		lazy = false,
+	},
+	{
+		"mason-org/mason-lspconfig.nvim",
+		lazy = false,
+		opts = { ensure_installed = lsp_servers_for_mason_to_install },
+		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} },
+			"neovim/nvim-lspconfig",
+		},
 	},
 	{
 		'hrsh7th/nvim-cmp',
