@@ -24,7 +24,7 @@ xbps-install -Sy -R https://repo-default.voidlinux.org/current -r /mnt \
 	kbd tzdata pciutils usbutils openssh dhcpcd iproute2 iputils xbps neovim \
 	wifi-firmware traceroute ethtool kmod acpid eudev runit-void removed-packages \
 	opendoas iwd dbus \
-	cryptsetup lvm2 dracut \
+	cryptsetup lvm2 dracut zstd \
 	clang systemd-boot-efistub sbctl efibootmgr
 
 xgenfstab /mnt > /mnt/etc/fstab
@@ -50,7 +50,7 @@ root_uuid="$(blkid -o value -s UUID -t LABEL="${my_hostname}R")"
 luks_uuid="$(blkid -o value -s UUID -t PARTLABEL="${my_hostname}Luks")"
 kernel_cmdline="quiet root=UUID=$root_uuid rd.luks.uuid=$luks_uuid rd.lvm.vg=${my_hostname}_system"
 mkdir -p /mnt/etc/dracut.conf.d/
-printf 'uefi=yes\nkernel_cmdline="%s"\n' "$kernel_cmdline" > /mnt/etc/dracut.conf.d/uki.conf
+printf 'uefi=yes\nkernel_cmdline="%s"\ncompress=zstd\nhostonly=yes\n' "$kernel_cmdline" > /mnt/etc/dracut.conf.d/uki.conf
 mkdir -p /mnt/esp/EFI/BOOT
 linux_version="$(xchroot /mnt xbps-query --regex -s '^linux[0-9.]+-[0-9._]+' | grep -Eo '([0-9]+\.){2}[0-9_]+')"
 xchroot /mnt dracut --force --uefi /esp/EFI/BOOT/linux_"${linux_version}".efi --kver "$linux_version"

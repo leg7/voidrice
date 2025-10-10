@@ -28,7 +28,8 @@ if [ "$existing_entry" != "" ]; then
 /etc/kernel.d/post-remove/50-efibootmgr $PKGNAME
 fi
 
-system_disk="$(blkid -o value -s UUID -t PARTLABEL="$(hostname)Esp")"
+esp_partition="$(blkid -o device -t PARTLABEL="${my_hostname}Esp")"
+system_disk="/dev/$(lsblk -no PKNAME "$esp_partition")"
 # create the new entry
 efibootmgr -qc \
    	--disk "$system_disk" \
