@@ -21,7 +21,7 @@ bar:
 
   left:
     - script:
-        path: ~/.local/bin/battery
+        path: ~/.local/bin/battery-t480
         args:
           - "-y"
         poll-interval: 5000

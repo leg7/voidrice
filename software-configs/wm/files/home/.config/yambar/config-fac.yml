@@ -20,11 +20,8 @@ bar:
   trackpad-sensitivity: 40
 
   left:
-    - script:
-        path: ~/.local/bin/battery
-        args:
-          - "-y"
-        poll-interval: 5000
+    - battery:
+        name: BAT0
         content:
           map:
             default:
@@ -43,7 +40,7 @@ bar:
                   - string: {text: "󰁹 {capacity}%"}
 
             conditions:
-              charging:
+              state == "charging":
                 ramp:
                   foreground: *color_charging
                   tag: capacity
