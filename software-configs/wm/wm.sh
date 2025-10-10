@@ -59,6 +59,15 @@ sudo xbps-install -y \
 	ImageMagick ffmpeg yt-dlp \
 	jq
 
+sudo xbps-install -y gdb libX11-devel freetype-devel
+git clone --depth=1 https://github.com/nakst/gf.git ~/.local/share/gf
+(
+	cd ~/.local/share/gf
+	cp extensions_v5/*.cpp .
+	./build.sh
+	cp gf2 ~/.local/bin
+)
+
 # Install rivercarro (not in void repos)
 
 sudo xbps-install -y wayland wayland-devel wayland-protocols wlroots libxkbcommon libevdev pixman pkg-config zig
@@ -93,8 +102,9 @@ cargo install rustmission
 
 # Other utilities
 
-cargo install inlyne # inlyne markdown viewer
 go install github.com/hhatto/gocloc/cmd/gocloc@latest # lines of code counter
+cargo install inlyne                                  # inlyne markdown viewer
+cargo install dysk                                    # more useful df
 
 # TODO: Vial, logseq, door-knocker, mime apps, portals
 
