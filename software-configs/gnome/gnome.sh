@@ -5,6 +5,7 @@ sudo ln -sf /etc/sv/dbus/ /var/service/
 
 sudo xbps-install -y xf86-input-evdev xorg-server-xwayland gnome
 sudo ln -sf /etc/sv/gdm/ /var/service/
+sudo unlink /var/service/agetty-tty1
 
 sudo xbps-install -y firefox libreoffice
 
