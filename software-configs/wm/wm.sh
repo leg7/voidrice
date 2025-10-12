@@ -5,6 +5,7 @@
 	./base.sh
 )
 
+sudo xbps-install -y void-repo-multilib void-repo-multilib-nonfree
 sudo xbps-install -Sy
 
 # Graphical wayland stuff
@@ -24,13 +25,12 @@ sudo xbps-install -y \
 	wl-clipboard xlsclients lswt wlr-randr qrencode swaybg grim slurp satty libnotify \
 	mpc helvum pulsemixer easyeffects guitarix2 pamixer \
 	adwaita-icon-theme adwaita-qt \
-	noto-fonts-cjk noto-fonts-emoji noto-fonts-ttf nerd-fonts-symbols-ttf \
+	noto-fonts-cjk noto-fonts-emoji noto-fonts-ttf nerd-fonts-symbols-ttf
 
 # Gaming
 sudo xbps-install -y \
 	PrismLauncher \
 	MangoHud \
-	void-repo-multilib void-repo-multilib-nonfree \
 	libgcc-32bit libstdc++-32bit libdrm-32bit libglvnd-32bit mesa-dri-32bit libcurl-32bit \
 	steam
 
