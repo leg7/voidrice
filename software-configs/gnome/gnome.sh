@@ -10,6 +10,8 @@ sudo xbps-install -y firefox libreoffice
 
 sudo xbps-install -y pipewire wireplumber
 sudo usermod -aG audio user
+sudo ln -sf /usr/share/applications/pipewire.desktop ~/.config/autostart/
+sudo ln -sf /usr/share/applications/wireplumber.desktop ~/.config/autostart/
 
 stow -R --no-folding --dir ./files -t ~ home
 sudo stow -R --no-folding --dir ./files -t / root
