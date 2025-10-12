@@ -17,7 +17,7 @@ swapon /mnt/swapfile
 mkdir -p /mnt/var/db/xbps/keys
 cp /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
 
-# Dracut need objcopy from the clang package to make a UKI
+# Dracut needs objcopy from the clang package to make a UKI
 xbps-install -Sy -R https://repo-default.voidlinux.org/current -r /mnt \
 	base-minimal base-files linux \
 	ncurses libgcc file less util-linux man-pages mdocml xfsprogs dosfstools \

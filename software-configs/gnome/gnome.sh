@@ -8,7 +8,8 @@ sudo ln -sf /etc/sv/gdm/ /var/service/
 
 sudo xbps-install -y firefox libreoffice
 
-# Pipewire
-
 sudo xbps-install -y pipewire wireplumber
 sudo usermod -aG audio user
+
+stow -R --no-folding --dir ./files -t ~ home
+sudo stow -R --no-folding --dir ./files -t / root
