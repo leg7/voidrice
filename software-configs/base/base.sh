@@ -56,6 +56,8 @@ if test "$root_login_shell" != "/usr/bin/fish"; then
 	sudo chsh -s /usr/bin/fish
 fi
 
+sudo usermod -aG input user
+
 sudo xbps-install -y keyd
 sudo ln -sf /etc/sv/keyd/ /var/service
 
