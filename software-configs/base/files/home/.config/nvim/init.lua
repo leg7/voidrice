@@ -830,6 +830,16 @@ vim.lsp.config('lua_ls', {
 	},
 })
 
+vim.lsp.config('gopls', {
+	capabilities = {
+		workspace = {
+			didChangeWatchedFiles = {
+				dynamicRegistration = true,
+			},
+		},
+	},
+})
+
 for i=1, #lsp_servers do
 	vim.lsp.enable(lsp_servers[i])
 end
