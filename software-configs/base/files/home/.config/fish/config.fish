@@ -39,6 +39,7 @@ if status is-login
 		"$XDG_TEMPLATES_DIR" \
 		"$XDG_VIDEOS_DIR"
 
+	set -gx WGETRC "$XDG_CONFIG_HOME/wgetrc"
 	set -gx XCURSOR_PATH "$XCURSOR_PATH:$XDG_DATA_HOME/icons:/usr/share/icons"
 	set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME/pass"
 	set -gx MBSYNCRC "$XDG_CONFIG_HOME/isync/mbsyncrc"
