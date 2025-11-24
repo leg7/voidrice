@@ -84,9 +84,8 @@ sudo usermod -aG audio user
 
 # Mpd
 
-sudo xbps-install -y mpd
+sudo xbps-install -y mpd rmpc
 mkdir -p ~/.local/share/mpd/playlists ~/.local/state/mpd  ~/.local/cache/mpd
-cargo install inori
 
 # Bluetooth
 
