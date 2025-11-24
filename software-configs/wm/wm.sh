@@ -82,9 +82,8 @@ git clone https://git.sr.ht/~novakane/rivercarro ~/.local/share/rivercarro
 sudo xbps-install -y pipewire wireplumber
 sudo usermod -aG audio user
 
-# Mpd
-
-sudo xbps-install -y mpd rmpc
+# Music
+sudo xbps-install -y mpd rmpc spek-x picard
 mkdir -p ~/.local/share/mpd/playlists ~/.local/state/mpd  ~/.local/cache/mpd
 
 # Bluetooth
