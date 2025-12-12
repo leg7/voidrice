@@ -258,6 +258,12 @@ require('lazy').setup({
 		ft = 'haskell',
 	},
 	{
+		-- TODO: Remove after csp class is done
+		'vale1410/vim-minizinc',
+		lazy = false,
+		ft = 'zinc',
+	},
+	{
 		-- same for nix
 		'LnL7/vim-nix',
 		ft = 'nix',
@@ -359,6 +365,12 @@ require('lazy').setup({
 		config = function()
 			require('fzf-lua').register_ui_select()
 		end,
+		options = {
+			files = {
+				path_shorten = true,
+				fd_opts = [[ --exclude 'bin' --exclude 'build' --exclude '.git' ]]
+			},
+		},
 		keys = {
 			{ '<c-f>', mode = 'n', function() require('fzf-lua').files() end, desc = 'Fzf' },
 			{ '<c-b>', mode = 'n', function() require('fzf-lua').buffers() end, desc = 'Fzf buffers' },
@@ -521,7 +533,7 @@ require('lazy').setup({
 			autoload = true,
 			highlight_column = {
 				enable = true,
-				number = 120,
+				number = 100,
 			},
 			integrations = {
 				which_key = true,
@@ -664,7 +676,8 @@ vim.diagnostic.config({
 
 vim.opt.fileencoding = 'UTF-8'
 vim.opt.title = true
-vim.opt.shortmess = 'a'
+vim.opt.more = false
+vim.opt.shortmess = 'filnxtToOFcIa'
 vim.opt.lazyredraw = false
 vim.opt.scrolloff = 4
 
@@ -756,7 +769,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
 	callback = function()
 		if vim.g.neovide then
 			vim.opt.lazyredraw = false
-			vim.o.guifont = 'monospace:h14'
+			vim.o.guifont = 'monospace:h11:#e-subpixelantialias:#h-full'
 			vim.o.linespace = 2
 			vim.g.neovide_cursor_vfx_mode = 'pixiedust'
 			vim.g.neovide_opacity = 1
@@ -848,16 +861,16 @@ local wk = require('which-key')
 wk.add({
 	{
 		mode = 'n',
-		{ 'gd', function() vim.lsp.buf.definition()       end, desc = 'lsp: Go to definition of symbol' },
-		{ 'gD', function() vim.lsp.buf.declaration()      end, desc = 'lsp: Go to declaration of symbol' },
-		{ 'gi', function() vim.lsp.buf.implementation()   end, desc = 'lsp: Go to implementation of symbol' },
-		{ 'go', function() vim.lsp.buf.type_definition()  end, desc = 'lsp: Go to type definition of symbol' },
-		{ 'gR', function() vim.lsp.buf.references()       end, desc = 'lsp: Find references of symbol' },
-		{ 'gh', function() vim.lsp.buf.hover()            end, desc = 'lsp: Show information about symbol under the cursor' },
-		{ 'gr', function() vim.lsp.buf.rename()           end, desc = 'lsp: Rename symbol under cursor' },
-		{ 'ga', function() vim.lsp.buf.code_action()      end, desc = 'lsp: Show code actions for symbol' },
-		{ 'gs', function() vim.lsp.buf.signature_help({}) end, desc = 'lsp: Show signature help for function' },
-		{ 'gF',      mode = {'n', 'x'}, function() vim.lsp.buf.format({async = true}) end, desc = 'lsp: Format buffer (async)' },
-		{ '<c-s>',   mode = 'i',        function() vim.lsp.buf.signature_help({ close_events = { "CursorMoved", "InsertLeave" }}) end,desc = 'lsp: Show signature help for function' },
+		{ 'gd', vim.lsp.buf.definition,      desc = 'lsp: Go to definition of symbol' },
+		{ 'gD', vim.lsp.buf.declaration,     desc = 'lsp: Go to declaration of symbol' },
+		{ 'gi', vim.lsp.buf.implementation,  desc = 'lsp: Go to implementation of symbol' },
+		{ 'go', vim.lsp.buf.type_definition, desc = 'lsp: Go to type definition of symbol' },
+		{ 'gR', vim.lsp.buf.references,      desc = 'lsp: Find references of symbol' },
+		{ 'gh', vim.lsp.buf.hover,           desc = 'lsp: Show information about symbol under the cursor' },
+		{ 'gr', vim.lsp.buf.rename,          desc = 'lsp: Rename symbol under cursor' },
+		{ 'ga', vim.lsp.buf.code_action,     desc = 'lsp: Show code actions for symbol' },
+		{ 'gs', vim.lsp.buf.signature_help,  desc = 'lsp: Show signature help for function' },
+		{ 'gF',    mode = {'n', 'x'}, function() vim.lsp.buf.format({async = true}) end, desc = 'lsp: Format buffer (async)' },
+		{ '<c-s>', mode = 'i',        function() vim.lsp.buf.signature_help({ close_events = { "CursorMoved", "InsertLeave" }}) end,desc = 'lsp: Show signature help for function' },
 	}
 })
