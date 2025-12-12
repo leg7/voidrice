@@ -28,13 +28,16 @@ do
 	riverctl input "$mouse" accel-profile none
 done
 
-touchpad="pointer-1739-0-Synaptics_TM3276-022"
-riverctl input "$touchpad" accel-profile adaptive
-riverctl input "$touchpad" pointer-accel 0.4
-riverctl input "$touchpad" tap enabled
-riverctl input "$touchpad" click-method clickfinger
-riverctl input "$touchpad" middle-emulation enabled
-riverctl input "$touchpad" natural-scroll enabled
+touchpads="pointer-1739-0-Synaptics_TM3276-022 pointer-1267-12868-ELAN0773:00_04F3:3244_Touchpad"
+for touchpad in $touchpads
+do
+	riverctl input "$touchpad" accel-profile adaptive
+	riverctl input "$touchpad" pointer-accel 0.3
+	riverctl input "$touchpad" tap enabled
+	riverctl input "$touchpad" click-method clickfinger
+	riverctl input "$touchpad" middle-emulation enabled
+	riverctl input "$touchpad" natural-scroll enabled
+done
 
 nipple="pointer-2-10-TPPS/2_IBM_TrackPoint"
 riverctl input "$nipple" accel-profile adaptive
