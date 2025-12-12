@@ -6,6 +6,8 @@ sudo xbps-install -y brightnessctl kanshi
 
 sudo xbps-install -y mesa-dri vulkan-loader mesa-vulkan-intel intel-media-driver
 
+sudo xbps-install -y bolt
+
 # The default config is good enough for this laptop
 sudo xbps-install -y tlp
 sudo ln -sf /etc/sv/tlp/ /var/service/
