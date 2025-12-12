@@ -39,7 +39,6 @@ if status is-login
 		"$XDG_TEMPLATES_DIR" \
 		"$XDG_VIDEOS_DIR"
 
-	set -gx WGETRC "$XDG_CONFIG_HOME/wgetrc"
 	set -gx XCURSOR_PATH "$XCURSOR_PATH:$XDG_DATA_HOME/icons:/usr/share/icons"
 	set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME/pass"
 	set -gx MBSYNCRC "$XDG_CONFIG_HOME/isync/mbsyncrc"
@@ -90,6 +89,7 @@ if status is-interactive
 		bind -M $mode 'ctrl-h' "fzf-history; commandline -f repaint"
 		bind -M $mode 'ctrl-p' "fzf-copy-path; commandline -f repaint"
 		bind -M $mode 'ctrl-f' "fzf-xdg-open; commandline -f repaint"
+		bind -M $mode 'ctrl-t' "setsid -f footclient"
 		bind -M $mode 'alt-l' "ls -lahv --group-directories-first; fish_prompt"
 		bind -M $mode 'alt-t' "tree -L 3; fish_prompt"
 	end
