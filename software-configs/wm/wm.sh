@@ -88,7 +88,7 @@ mkdir -p ~/.local/state/mpd  ~/.local/cache/mpd
 
 # Bluetooth
 
-sudo xbps-install -y bluez libspa-bluetooth
+sudo xbps-install -y bluez libspa-bluetooth bluetui
 sudo ln -sf /etc/sv/bluetoothd /var/service
 
 # Transmission
