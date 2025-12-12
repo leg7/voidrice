@@ -14,7 +14,7 @@ bar:
   location: top
   background: *background
   foreground: *foreground
-  font: monospace:pixelsize=19
+  font: monospace:pixelsize=16
   spacing: *margin
   margin: *margin
   trackpad-sensitivity: 40
