@@ -65,7 +65,6 @@ bar:
               wheel-up: "brightnessctl s 2%+"
               wheel-down: "brightnessctl s 2%-"
 
-    # do volume and battery
     - pipewire:
         content:
           map:

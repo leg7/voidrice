@@ -25,7 +25,7 @@ sudo xbps-install -y \
 	wl-clipboard xlsclients lswt wlr-randr qrencode swaybg grim slurp satty libnotify \
 	mpc helvum pulsemixer easyeffects guitarix2 pamixer \
 	adwaita-icon-theme adwaita-qt \
-	noto-fonts-cjk noto-fonts-emoji noto-fonts-ttf nerd-fonts-symbols-ttf
+	noto-fonts-cjk noto-fonts-emoji noto-fonts-ttf nerd-fonts-symbols-ttf font-firacode
 
 # Gaming
 sudo xbps-install -y \
