@@ -134,7 +134,7 @@ bar:
               right: sh -c "riverctl toggle-focused-tags $((1 << ({id} -1)))"
               middle: sh -c "riverctl toggle-view-tags $((1 << ({id} -1)))"
             conditions:
-              id > 7:
+              id > 8:
                 string: {text: }
               urgent:
                 string: {text: "{id}", margin: *margin, deco: { background: {color: *color_attention} }}
@@ -151,7 +151,7 @@ bar:
           map:
             on-click:
               left: "mpc toggle"
-              right: sh -c "riverctl set-focused-tags $((1 << 3)) && pgrep rmpc || setsid -f footclient rmpc"
+              right: sh -c "riverctl set-focused-tags $((1 << 4)) && pgrep rmpc || setsid -f footclient rmpc"
             conditions:
               state == stopped:
                 - string: {text: 󰝛}

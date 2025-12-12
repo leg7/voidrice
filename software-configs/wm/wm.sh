@@ -84,7 +84,7 @@ sudo usermod -aG audio user
 
 # Music
 sudo xbps-install -y mpd rmpc spek-x picard
-mkdir -p ~/.local/share/mpd/playlists ~/.local/state/mpd  ~/.local/cache/mpd
+mkdir -p ~/.local/state/mpd  ~/.local/cache/mpd
 
 # Bluetooth
 
