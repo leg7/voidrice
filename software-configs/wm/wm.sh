@@ -9,7 +9,6 @@ sudo xbps-install -y void-repo-multilib void-repo-multilib-nonfree
 sudo xbps-install -Sy
 
 # Graphical wayland stuff
-
 sudo xbps-install -y seatd
 sudo ln -sf /etc/sv/seatd /var/service
 sudo usermod -aG _seatd user
@@ -69,8 +68,10 @@ git clone --depth=1 https://github.com/nakst/gf.git ~/.local/share/gf
 	cp gf2 ~/.local/bin
 )
 
-# Install rivercarro (not in void repos)
+go install github.com/go-delve/delve/cmd/dlv@latest
+go install github.com/aarzilli/gdlv@latest
 
+# Install rivercarro (not in void repos)
 sudo xbps-install -y wayland wayland-devel wayland-protocols wlroots libxkbcommon libevdev pixman pkg-config zig
 git clone https://git.sr.ht/~novakane/rivercarro ~/.local/share/rivercarro
 (
@@ -79,8 +80,7 @@ git clone https://git.sr.ht/~novakane/rivercarro ~/.local/share/rivercarro
 	zig build -Doptimize=ReleaseSafe --prefix ~/.local
 )
 
-# Pipewire
-
+# Audio
 sudo xbps-install -y pipewire wireplumber
 sudo usermod -aG audio user
 
@@ -89,18 +89,15 @@ sudo xbps-install -y mpd rmpc spek-x picard
 mkdir -p ~/.local/state/mpd  ~/.local/cache/mpd
 
 # Bluetooth
-
 sudo xbps-install -y bluez libspa-bluetooth bluetui
 sudo ln -sf /etc/sv/bluetoothd /var/service
 
-# Transmission
-
+# Torrents
 sudo xbps-install -y transmission
 sudo xbps-install -y openssl-devel
 cargo install rustmission
 
 # Other utilities
-
 go install github.com/hhatto/gocloc/cmd/gocloc@latest # lines of code counter
 cargo install inlyne                                  # inlyne markdown viewer
 cargo install dysk                                    # more useful df
