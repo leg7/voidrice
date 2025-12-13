@@ -33,6 +33,7 @@ sudo xbps-install -y \
 	PrismLauncher \
 	MangoHud \
 	libgcc-32bit libstdc++-32bit libdrm-32bit libglvnd-32bit mesa-dri-32bit libcurl-32bit \
+	gamemode \
 	steam
 
 # TODO: Heroic, cemu, osu lazer, wootility
