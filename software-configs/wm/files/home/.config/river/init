@@ -36,4 +36,11 @@ transmission-daemon &
 syncthing --no-browser &
 
 sg audio -c mpd # mpd must be fully initialized for the yambar mpd module to work
-kanshi # Kanshi autostarts yambar
+
+# Kanshi autostarts yambar but the desktop config doesn't use kanshi
+# So if we are on desktop we have to manually start yambar
+if which kashi; then
+	kanshi
+else
+	yambar-reload
+fi
