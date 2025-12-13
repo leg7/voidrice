@@ -22,11 +22,6 @@ sudo ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 sudo xbps-install -y openntpd
 sudo ln -sf /etc/sv/openntpd/ /var/service
 
-# Network
-
-sudo xbps-install -y dhcpcd
-sudo ln -sf /etc/sv/dhcpcd /var/service
-
 # Firewall
 
 sudo xbps-install -y nftables
