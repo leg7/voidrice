@@ -4,7 +4,10 @@ sudo xbps-install -y void-repo-nonfree intel-ucode sof-firmware
 
 sudo xbps-install -y brightnessctl kanshi
 
-sudo xbps-install -y mesa-dri vulkan-loader mesa-vulkan-intel intel-media-driver
+sudo xbps-install -y mesa-dri vulkan-loader mesa-vulkan-intel
+
+# Hardware acceleration
+sudo xbps-install -y intel-media-driver libva-utils
 
 sudo xbps-install -y bolt
 

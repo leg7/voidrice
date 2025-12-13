@@ -1,6 +1,9 @@
 #!/bin/sh
 
-sudo xbps-install -y void-repo-nonfree amdvlk amdvlk-32bit linux-firmware-amd
+# Hardware acceleration
+sudo xbps-install -y mesa-vaapi libva-utils
+
+sudo xbps-install -y void-repo-nonfree amdvlk linux-firmware-amd
 
 sudo xbps-install -y mesa-dri vulkan-loader
 
