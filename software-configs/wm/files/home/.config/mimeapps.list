@@ -20,3 +20,5 @@ x-scheme-handler/lbry=lbry.desktop
 inode/directory=file.desktop
 x-scheme-handler/sgnl=signal.desktop
 x-scheme-handler/signalcaptcha=signal.desktop
+x-scheme-handler/nxm=umo.desktop
+x-scheme-handler/momw=umo.desktop
