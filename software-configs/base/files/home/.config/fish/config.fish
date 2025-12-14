@@ -1,7 +1,7 @@
 if status is-login
 	set -U fish_greeting
 
-	set -gx PATH "$PATH:$BIN_HOME"
+	set -gx PATH "$BIN_HOME:$PATH"
 
 	set -gx LESS "Ri" # Less default options (inhibits git from calling less with -F and -R)
 	set -gx BROWSER "brave"
